@@ -1,0 +1,1671 @@
+[
+	{
+		"metadata": {
+			"timestamp": "2024-11-20T17:29:33.791Z",
+			"url": "https://www.airbnb.com/rooms/578897320179146437?adults=1&category_tag=Tag%3A8536&children=0&enable_m3_private_room=true&infants=0&pets=0&photo_id=1600553436&search_mode=flex_destinations_search&check_in=2024-11-20&check_out=2024-11-25&source_impression_id=p3_1732120908_P3utgzMinH4x1mrh&previous_page_section_name=1000&federated_search_id=0454c206-2f02-45d6-8414-d27908761cc3",
+			"listingId": "578897320179146437",
+			"duration": 44039
+		},
+		"data": {
+			"overview": {
+				"title": "Home in Newburgh · ★4.98 · 5 bedrooms · 6 beds · 3.5 baths",
+				"propertyType": "Entire home",
+				"location": "Newburgh",
+				"capacity": 10,
+				"rating": 4.98,
+				"reviewCount": 100,
+				"ratings": {
+					"accuracy": 4.96,
+					"checkin": 4.99,
+					"cleanliness": 4.92,
+					"communication": 4.97,
+					"location": 4.92,
+					"value": 4.77,
+					"overall": 4.98
+				},
+				"isSuperhost": false,
+				"description": "Nov 20, 2024 - Entire home for $905. Friends and family will be wowed when gathering at this spacious and ultra comfortable home. There’s a beautiful new gunite pool, hot tub, large pa...",
+				"imageUrl": "https://a0.muscache.com/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/711b3443-e480-4e29-9085-86062c04073a.jpeg"
+			},
+			"amenities": {
+				"title": "What this place offers",
+				"count": 78,
+				"groups": [
+					{
+						"title": "Scenic views",
+						"amenities": [
+							{
+								"title": "River view",
+								"subtitle": null,
+								"icon": "SYSTEM_VIEW_OCEAN",
+								"available": true
+							},
+							{
+								"title": "Pool view",
+								"subtitle": null,
+								"icon": "SYSTEM_POOL",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Bathroom",
+						"amenities": [
+							{
+								"title": "Bathtub",
+								"subtitle": null,
+								"icon": "SYSTEM_BATHTUB",
+								"available": true
+							},
+							{
+								"title": "Hair dryer",
+								"subtitle": null,
+								"icon": "SYSTEM_HAIRDRYER",
+								"available": true
+							},
+							{
+								"title": "Cleaning products",
+								"subtitle": null,
+								"icon": "SYSTEM_CLEANING_SUPPLIES",
+								"available": true
+							},
+							{
+								"title": "Shampoo",
+								"subtitle": null,
+								"icon": "SYSTEM_SHAMPOO",
+								"available": true
+							},
+							{
+								"title": "Conditioner",
+								"subtitle": null,
+								"icon": "SYSTEM_SHAMPOO",
+								"available": true
+							},
+							{
+								"title": "Body soap",
+								"subtitle": null,
+								"icon": "SYSTEM_SOAP",
+								"available": true
+							},
+							{
+								"title": "Bidet",
+								"subtitle": null,
+								"icon": "SYSTEM_TOILET_BIDET",
+								"available": true
+							},
+							{
+								"title": "Outdoor shower",
+								"subtitle": null,
+								"icon": "SYSTEM_SHOWER",
+								"available": true
+							},
+							{
+								"title": "Hot water",
+								"subtitle": null,
+								"icon": "SYSTEM_HOT_WATER",
+								"available": true
+							},
+							{
+								"title": "Shower gel",
+								"subtitle": null,
+								"icon": "SYSTEM_SOAP",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Bedroom and laundry",
+						"amenities": [
+							{
+								"title": "Free washer – In building",
+								"subtitle": null,
+								"icon": "SYSTEM_WASHER",
+								"available": true
+							},
+							{
+								"title": "Free dryer – In building",
+								"subtitle": null,
+								"icon": "SYSTEM_DRYER",
+								"available": true
+							},
+							{
+								"title": "Essentials",
+								"subtitle": "Towels, bed sheets, soap, and toilet paper",
+								"icon": "SYSTEM_TOILETRIES",
+								"available": true
+							},
+							{
+								"title": "Hangers",
+								"subtitle": null,
+								"icon": "SYSTEM_HANGERS",
+								"available": true
+							},
+							{
+								"title": "Bed linens",
+								"subtitle": "Cotton linens",
+								"icon": "SYSTEM_BLANKETS",
+								"available": true
+							},
+							{
+								"title": "Extra pillows and blankets",
+								"subtitle": null,
+								"icon": "SYSTEM_PILLOW",
+								"available": true
+							},
+							{
+								"title": "Room-darkening shades",
+								"subtitle": null,
+								"icon": "SYSTEM_BLACKOUT_SHADES",
+								"available": true
+							},
+							{
+								"title": "Iron",
+								"subtitle": null,
+								"icon": "SYSTEM_IRON",
+								"available": true
+							},
+							{
+								"title": "Drying rack for clothing",
+								"subtitle": null,
+								"icon": "SYSTEM_HANGERS",
+								"available": true
+							},
+							{
+								"title": "Clothing storage: closet and dresser",
+								"subtitle": null,
+								"icon": "SYSTEM_WARDROBE",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Entertainment",
+						"amenities": [
+							{
+								"title": "TV",
+								"subtitle": null,
+								"icon": "SYSTEM_TV",
+								"available": true
+							},
+							{
+								"title": "Piano",
+								"subtitle": null,
+								"icon": "SYSTEM_PIANO",
+								"available": true
+							},
+							{
+								"title": "Sonos Bluetooth sound system",
+								"subtitle": null,
+								"icon": "SYSTEM_SPEAKERS",
+								"available": true
+							},
+							{
+								"title": "Exercise equipment: free weights, yoga mat",
+								"subtitle": null,
+								"icon": "SYSTEM_GYM",
+								"available": true
+							},
+							{
+								"title": "Pool table",
+								"subtitle": null,
+								"icon": "SYSTEM_POOL_TABLE",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Family",
+						"amenities": [
+							{
+								"title": "Pack ’n play/Travel crib - always at the listing",
+								"subtitle": null,
+								"icon": "SYSTEM_PACK_N_PLAY",
+								"available": true
+							},
+							{
+								"title": "Fireplace guards",
+								"subtitle": null,
+								"icon": "SYSTEM_FIREPLACE_GUARD",
+								"available": true
+							},
+							{
+								"title": "Board games",
+								"subtitle": null,
+								"icon": "SYSTEM_BOARD_GAMES",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Heating and cooling",
+						"amenities": [
+							{
+								"title": "Central air conditioning",
+								"subtitle": null,
+								"icon": "SYSTEM_SNOWFLAKE",
+								"available": true
+							},
+							{
+								"title": "Indoor fireplace: gas, wood-burning",
+								"subtitle": null,
+								"icon": "SYSTEM_FIREPLACE",
+								"available": true
+							},
+							{
+								"title": "Ceiling fan",
+								"subtitle": null,
+								"icon": "SYSTEM_FAN_CEILING",
+								"available": true
+							},
+							{
+								"title": "Portable fans",
+								"subtitle": null,
+								"icon": "SYSTEM_FAN_PORTABLE",
+								"available": true
+							},
+							{
+								"title": "Central heating",
+								"subtitle": null,
+								"icon": "SYSTEM_THERMOMETER",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Home safety",
+						"amenities": [
+							{
+								"title": "Smoke alarm",
+								"subtitle": null,
+								"icon": "SYSTEM_DETECTOR_SMOKE",
+								"available": true
+							},
+							{
+								"title": "Carbon monoxide alarm",
+								"subtitle": null,
+								"icon": "SYSTEM_DETECTOR_CO",
+								"available": true
+							},
+							{
+								"title": "Fire extinguisher",
+								"subtitle": null,
+								"icon": "SYSTEM_FIRE_EXTINGUISHER",
+								"available": true
+							},
+							{
+								"title": "First aid kit",
+								"subtitle": null,
+								"icon": "SYSTEM_FIRST_AID_KIT",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Internet and office",
+						"amenities": [
+							{
+								"title": "Wifi",
+								"subtitle": null,
+								"icon": "SYSTEM_WI_FI",
+								"available": true
+							},
+							{
+								"title": "Dedicated workspace",
+								"subtitle": "In a common space",
+								"icon": "SYSTEM_WORKSPACE",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Kitchen and dining",
+						"amenities": [
+							{
+								"title": "Kitchen",
+								"subtitle": "Space where guests can cook their own meals",
+								"icon": "SYSTEM_COOKING_BASICS",
+								"available": true
+							},
+							{
+								"title": "Refrigerator",
+								"subtitle": null,
+								"icon": "SYSTEM_REFRIGERATOR",
+								"available": true
+							},
+							{
+								"title": "Microwave",
+								"subtitle": null,
+								"icon": "SYSTEM_MICROWAVE",
+								"available": true
+							},
+							{
+								"title": "Cooking basics",
+								"subtitle": "Pots and pans, oil, salt and pepper",
+								"icon": "SYSTEM_COOKING_BASICS",
+								"available": true
+							},
+							{
+								"title": "Dishes and silverware",
+								"subtitle": "Bowls, chopsticks, plates, cups, etc.",
+								"icon": "SYSTEM_DISHES_AND_SILVERWARE",
+								"available": true
+							},
+							{
+								"title": "Freezer",
+								"subtitle": null,
+								"icon": "SYSTEM_REFRIGERATOR",
+								"available": true
+							},
+							{
+								"title": "Dishwasher",
+								"subtitle": null,
+								"icon": "SYSTEM_DISHWASHER",
+								"available": true
+							},
+							{
+								"title": "Electric stove",
+								"subtitle": null,
+								"icon": "SYSTEM_STOVE",
+								"available": true
+							},
+							{
+								"title": "Oven",
+								"subtitle": null,
+								"icon": "SYSTEM_OVEN",
+								"available": true
+							},
+							{
+								"title": "Hot water kettle",
+								"subtitle": null,
+								"icon": "SYSTEM_WATER_KETTLE",
+								"available": true
+							},
+							{
+								"title": "Coffee maker: drip coffee maker",
+								"subtitle": null,
+								"icon": "SYSTEM_COFFEE_MAKER",
+								"available": true
+							},
+							{
+								"title": "Wine glasses",
+								"subtitle": null,
+								"icon": "SYSTEM_MAPS_BAR",
+								"available": true
+							},
+							{
+								"title": "Toaster",
+								"subtitle": null,
+								"icon": "SYSTEM_TOASTER",
+								"available": true
+							},
+							{
+								"title": "Baking sheet",
+								"subtitle": null,
+								"icon": "SYSTEM_BAKING_SHEET",
+								"available": true
+							},
+							{
+								"title": "Blender",
+								"subtitle": null,
+								"icon": "SYSTEM_BLENDER",
+								"available": true
+							},
+							{
+								"title": "Rice maker",
+								"subtitle": null,
+								"icon": "SYSTEM_RICE_COOKER",
+								"available": true
+							},
+							{
+								"title": "Barbecue utensils",
+								"subtitle": "Grill, charcoal, bamboo skewers/iron skewers, etc.",
+								"icon": "SYSTEM_GRILL",
+								"available": true
+							},
+							{
+								"title": "Dining table",
+								"subtitle": null,
+								"icon": "SYSTEM_DINING_TABLE",
+								"available": true
+							},
+							{
+								"title": "Coffee",
+								"subtitle": null,
+								"icon": "SYSTEM_COFFEE_MAKER",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Location features",
+						"amenities": [
+							{
+								"title": "Waterfront",
+								"subtitle": "Right next to a body of water",
+								"icon": "SYSTEM_VIEW_OCEAN",
+								"available": true
+							},
+							{
+								"title": "Private entrance",
+								"subtitle": "Separate street or building entrance",
+								"icon": "SYSTEM_DOOR",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Outdoor",
+						"amenities": [
+							{
+								"title": "Private patio or balcony",
+								"subtitle": null,
+								"icon": "SYSTEM_PATIO_BALCONY",
+								"available": true
+							},
+							{
+								"title": "Private backyard – Fully fenced",
+								"subtitle": "An open space on the property usually covered in grass",
+								"icon": "SYSTEM_FLOWER",
+								"available": true
+							},
+							{
+								"title": "Fire pit",
+								"subtitle": null,
+								"icon": "SYSTEM_FIREPIT",
+								"available": true
+							},
+							{
+								"title": "Outdoor furniture",
+								"subtitle": null,
+								"icon": "SYSTEM_ROOFTOP_DECK",
+								"available": true
+							},
+							{
+								"title": "Outdoor dining area",
+								"subtitle": null,
+								"icon": "SYSTEM_ROOFTOP_DECK",
+								"available": true
+							},
+							{
+								"title": "BBQ grill",
+								"subtitle": null,
+								"icon": "SYSTEM_GRILL",
+								"available": true
+							},
+							{
+								"title": "Sun loungers",
+								"subtitle": null,
+								"icon": "SYSTEM_SUN_DECK",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Parking and facilities",
+						"amenities": [
+							{
+								"title": "Free parking on premises",
+								"subtitle": null,
+								"icon": "SYSTEM_MAPS_CAR_RENTAL",
+								"available": true
+							},
+							{
+								"title": "Free street parking",
+								"subtitle": null,
+								"icon": "SYSTEM_MAPS_CAR_RENTAL",
+								"available": true
+							},
+							{
+								"title": "Private outdoor pool - available seasonally, open 24 hours, heated",
+								"subtitle": "Available from May to Sep",
+								"icon": "SYSTEM_POOL",
+								"available": true
+							},
+							{
+								"title": "Private hot tub - available all year, open specific hours",
+								"subtitle": null,
+								"icon": "SYSTEM_JACUZZI",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Services",
+						"amenities": [
+							{
+								"title": "Pets allowed",
+								"subtitle": "Assistance animals are always allowed",
+								"icon": "SYSTEM_PETS",
+								"available": true
+							},
+							{
+								"title": "Long term stays allowed",
+								"subtitle": "Allow stay for 28 days or more",
+								"icon": "SYSTEM_CALENDAR",
+								"available": true
+							},
+							{
+								"title": "Self check-in",
+								"subtitle": null,
+								"icon": "SYSTEM_KEY",
+								"available": true
+							},
+							{
+								"title": "Lockbox",
+								"subtitle": null,
+								"icon": "SYSTEM_SAFE",
+								"available": true
+							},
+							{
+								"title": "Cleaning available during stay",
+								"subtitle": null,
+								"icon": "SYSTEM_CLEAN",
+								"available": true
+							}
+						]
+					},
+					{
+						"title": "Not included",
+						"amenities": [
+							{
+								"title": "Exterior security cameras on property",
+								"subtitle": null,
+								"icon": "SYSTEM_NO_SURVEILLANCE",
+								"available": false
+							}
+						]
+					}
+				]
+			},
+			"location": {
+				"title": "Where you’ll be",
+				"subtitle": "Newburgh, New York, United States",
+				"coordinates": {
+					"lat": 41.53,
+					"lng": -74.00351
+				},
+				"mapMarkerType": "APPROX",
+				"mapMarkerRadiusInMeters": 500,
+				"locationDetails": {
+					"preview": [],
+					"full": [
+						{
+							"id": "TG9jYXRpb25EZXRhaWw6bmVpZ2hib3Job29kLXNlZUFsbF81Nzg4OTczMjAxNzkxNDY0Mzc=",
+							"type": "TEXT",
+							"title": "Newburgh, New York, United States",
+							"content": null
+						}
+					]
+				},
+				"verification": {
+					"isVerified": true,
+					"helpText": "We verified that this listing’s location is accurate."
+				},
+				"disclaimer": "Exact location provided after booking.",
+				"homeIcon": "COMPACT_TODAY_NAV",
+				"address": null,
+				"addressTitle": null,
+				"locationDisclaimer": null
+			},
+			"host": {
+				"title": "Meet your Host",
+				"host": {
+					"name": "Garrett",
+					"userId": "RGVtYW5kVXNlcjoyNDAyNzM5",
+					"isSuperhost": true,
+					"isVerified": true,
+					"profilePicture": "https://a0.muscache.com/im/pictures/user/User-2402739/original/12a9e87a-4d5d-4282-b15c-df6ea7a71555.jpeg",
+					"stats": {
+						"reviews": 103,
+						"rating": 4.97,
+						"yearsHosting": 12,
+						"monthsHosting": 6
+					}
+				},
+				"about": "Originally from NYC but currently living LA.  Love travel, design, friends, food, and culture both high and low.  Renovation addiction currently working on a house in Puglia for availability summer ‘25!",
+				"highlights": [
+					{
+						"icon": "SYSTEM_EVENTS",
+						"title": "Born in the 70s"
+					},
+					{
+						"icon": "SYSTEM_BRIEFCASE",
+						"title": "My work: Marketing"
+					}
+				],
+				"cohosts": [
+					{
+						"name": "Laura",
+						"userId": "RGVtYW5kVXNlcjo0MjU5Nzk3NQ==",
+						"profilePicture": "https://a0.muscache.com/im/pictures/user/834b923f-45f5-4dc1-bddf-47206890a7f2.jpg"
+					}
+				],
+				"details": {
+					"responseDetails": ["Response rate: 100%", "Responds within an hour"],
+					"superhostTitle": "Garrett is a Superhost",
+					"superhostDescription": "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests."
+				},
+				"disclaimer": "To protect your payment, never transfer money or communicate outside of the Airbnb website or app."
+			},
+			"policies": {
+				"title": "Things to know",
+				"cancellation": {
+					"title": "Cancellation policy",
+					"policy": "This reservation is non-refundable.",
+					"details": "Review this Host's full policy for details.",
+					"milestones": [
+						{
+							"type": "No refund",
+							"timeframe": {
+								"title": "After",
+								"dates": ["Nov 20", "12:28 PM"]
+							},
+							"refund": "This reservation is non-refundable.",
+							"startAt": "2024-11-20T17:28:48.056Z",
+							"endAt": "2024-11-20T21:00:00.000Z"
+						}
+					],
+					"disclaimers": [
+						"Cleaning fees are refunded if you cancel before check-in."
+					]
+				},
+				"houseRules": {
+					"title": "House rules",
+					"subtitle": "You'll be staying in someone's home, so please treat it with care and respect.",
+					"sections": [
+						{
+							"title": "Checking in and out",
+							"rules": [
+								{
+									"title": "Check-in after 4:00 PM",
+									"icon": "SYSTEM_CLOCK",
+									"subtitle": null,
+									"details": null
+								},
+								{
+									"title": "Checkout before 11:00 AM",
+									"icon": "SYSTEM_CLOCK",
+									"subtitle": null,
+									"details": null
+								},
+								{
+									"title": "Self check-in with lockbox",
+									"icon": "SYSTEM_CHECK_IN",
+									"subtitle": null,
+									"details": null
+								}
+							]
+						},
+						{
+							"title": "During your stay",
+							"rules": [
+								{
+									"title": "10 guests maximum",
+									"icon": "SYSTEM_FAMILY",
+									"subtitle": null,
+									"details": null
+								},
+								{
+									"title": "Pets allowed",
+									"icon": "SYSTEM_PETS",
+									"subtitle": null,
+									"details": null
+								},
+								{
+									"title": "No parties or events",
+									"icon": "SYSTEM_NO_EVENTS",
+									"subtitle": null,
+									"details": null
+								},
+								{
+									"title": "Commercial photography allowed",
+									"icon": "SYSTEM_CAMERA",
+									"subtitle": null,
+									"details": null
+								},
+								{
+									"title": "No smoking",
+									"icon": "SYSTEM_SMOKING_NOT_ALLOWED",
+									"subtitle": null,
+									"details": null
+								},
+								{
+									"title": "Additional rules",
+									"icon": "SYSTEM_CLIPBOARD",
+									"subtitle": null,
+									"details": "Well-behaved house trained dogs are welcome for a $100 non-refundable fee. If you are bringing a dog please select that option when making your reservation. One dog is allowed per reservation, unless otherwise approved by host.\n\nNo smoking anywhere on the property, except on the pool patio.\nNo pets w/o approval.\nNo parties or extra guests outside the maximum occupancy allowed on the listing.\nNo loud music after 9pm.\nNo weapons or fireworks."
+								}
+							]
+						}
+					]
+				},
+				"safety": {
+					"title": "Safety & property",
+					"subtitle": "Avoid surprises by looking over these important details about your Host's property.",
+					"items": [
+						{
+							"title": "Pool/hot tub without a gate or lock",
+							"icon": null
+						},
+						{
+							"title": "Nearby lake, river, other body of water",
+							"icon": null
+						},
+						{
+							"title": "Heights without rails or protection",
+							"icon": null
+						}
+					]
+				},
+				"disclaimer": null
+			},
+			"description": {
+				"title": "About this space",
+				"sections": [
+					{
+						"title": null,
+						"content": "Friends and family will be wowed when gathering at this spacious and ultra comfortable home. There’s a beautiful new gunite pool, hot tub, large patio, screened in porch, and spacious deck for barbecuing and dining. Interiors feature 2 fireplaces, 2 living spaces with large TVs, fully-equipped kitchen, game room, exercise area, piano, home office, and lots of space to spread out both inside and outside. All of it looks out to the Hudson River where you may spy bald eagles nesting nearby."
+					},
+					{
+						"title": "The space",
+						"content": "⭐️ Expansive mid-century mod home with multiple lounging areas<br /><br />⭐️ Epic views from nearly every room<br /><br />⭐️ Hotel-style heated pool and patio area with outdoor shower, chaises and lounge area<br /><br />⭐️ Brand new hot tub<br /><br />⭐️ Five bedrooms; 1 King, 2 Queens, 2 X-Long Twins, 1 Sofabed<br /><br />⭐️ Incredible views of Hudson River and Mountains<br /><br />⭐️ Enclosed porch, upper deck, outdoor firepit<br /><br />⭐️ Fully appointed kitchen & dining room with service for 12<br /><br />⭐️ Game room with pool table & fooseball<br /><br />⭐️ Hi-Speed wifi, 4 flat screen TVs<br /><br />⭐️ Blue-Tooth Sonos Speakers<br /><br />⭐️ Two fireplaces: one wood, one gas<br /><br />⭐️ Washer/Dryer<br /><br />⭐️ Multi-zone HVAC<br /><br />⭐️ Work space with adjustable standing/sitting desk<br /><br />There is something truly special about experiencing the direct river views of the Hudson Valley and witnessing the incredible natural beauty and the magical light that inspired the Hudson Valley School of painting.  We're so happy to share this with you in our one-of-a-kind home.<br /><br />The Hudson House is truly a four-season destination.  Whether lounging poolside in summer, witnessing the magnificent colors of Autumn from the hot tub, or drinking hot cocoa in front of a roaring fire in winter...there's no bad time of year to come.  The river and its surrounds provide a constant rotation of visual splendor and interest."
+					},
+					{
+						"title": "Guest access",
+						"content": "We are conveniently located in the leafy hamlet of Balmville, minutes from downtown Newburgh, and just over the bridge from the Beacon train station. <br /><br />90 minutes by train, or about a 75 minute drive from NYC.  The house is close to the best the Hudson Valley has to offer, including:<br /><br />- Hiking trails, local farms and distilleries (5 min)<br />- Beacon (10 min) <br />- Storm King Arts Park (15 min)<br />- Dia Beacon Museum (15 min)<br />- Benmarl & Quartrock Wineries (15 min)<br />- Woodbury Commons Outlet Mall (25 min)<br />- New Paltz (30 min)<br />- Mohonk Preserve (30 min)<br />- West Point (30 min)<br /><br />Adam's Farms for great food & fresh produce, as well as many big box shops from Walmart and BJ's to Home Depot and Target are also a 5-10 minute drive away. <br /><br />Escape to the quiet of nature while staying within minutes of life's conveniences."
+					},
+					{
+						"title": "Other things to note",
+						"content": "Well-behaved house trained dogs are welcome for a $100 non-refundable fee. If you are bringing a dog please select that option when making your reservation. One dog is allowed per reservation, unless otherwise approved by host.<br /><br />And while we allow children, babies and toddlers must be watched carefully in our home as the staircases have a lot of space in between steps and balusters. <br /><br />No smoking anywhere on the property, except on the pool patio.<br />No pets w/o approval.<br />No parties or extra guests outside the maximum occupancy allowed on the listing.<br />No loud music after 9pm.<br />No weapons or fireworks.<br /><br />Pool is only open from May 15th-Oct 15th weather depending. Please check with us ahead of booking if you are close to those dates and want to confirm the pool status."
+					}
+				]
+			},
+			"gallery": {
+				"title": "Photo tour",
+				"rooms": [
+					{
+						"title": "Living room 1",
+						"images": [
+							{
+								"caption": "Upstairs Living Room with gas fireplace and flat screen TV",
+								"accessibilityLabel": "Upstairs Living Room with gas fireplace and flat screen TV",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/eaf77ed0-35a8-4ec9-b343-b42fadd410a0.jpeg",
+								"aspectRatio": 1.3333333333333333,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Living room 1 image 2",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/7bf163ab-7190-474e-bd2e-620053a0d83f.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Living room 2",
+						"images": [
+							{
+								"caption": "Great Room with Hudson River views.",
+								"accessibilityLabel": "Great Room with Hudson River views.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/4bb91c06-f10e-41c0-939d-7c1acd48a2bd.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Great Room with fireplace, large screen TV, and bar.",
+								"accessibilityLabel": "Great Room with fireplace, large screen TV, and bar.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/259cac77-3c70-4f5a-a873-bbf0c9586190.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Great Room",
+								"accessibilityLabel": "Great Room",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/c3822bda-2cec-4bd3-a2d3-eb938463d115.jpeg",
+								"aspectRatio": 0.6665,
+								"orientation": "PORTRAIT"
+							},
+							{
+								"caption": "Great Room",
+								"accessibilityLabel": "Great Room",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/06f9cdf7-fc95-40a3-a0f6-e03ffd0e352d.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Great Room with views of the Hudson. NEW FURNITURE!",
+								"accessibilityLabel": "Great Room with views of the Hudson. NEW FURNITURE!",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/666abdc1-20cc-46df-b10c-7ac3c3806ac5.jpeg",
+								"aspectRatio": 1.4227106227106228,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Full kitchen",
+						"images": [
+							{
+								"caption": "Dine in kitchen with doors that lead out to a screened in porch and outdoor dining area with grill. ",
+								"accessibilityLabel": "Dine in kitchen with doors that lead out to a screened in porch and outdoor dining area with grill. ",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/554d400e-e8f9-47b2-9ac6-d1f337391385.jpeg",
+								"aspectRatio": 1.3333333333333333,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Fully Equipped Kitchen.",
+								"accessibilityLabel": "Fully Equipped Kitchen.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/7ad3beed-74be-456c-a5f7-5725f6b49cb1.jpeg",
+								"aspectRatio": 1.2699965071603214,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Dining area",
+						"images": [
+							{
+								"caption": null,
+								"accessibilityLabel": "Dining area image 1",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/a35a0c1b-a91d-4a28-88c3-23dbbfa004ee.jpeg",
+								"aspectRatio": 0.75,
+								"orientation": "PORTRAIT"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Dining area image 2",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/7f85f320-2759-4377-85d1-1dee3e788a4e.jpeg",
+								"aspectRatio": 1.4992592592592593,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Dining area image 3",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/3c832b26-45ea-44dc-82e1-9e078840928d.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "8 person dining table off the kitchen with views of the Hudson.",
+								"accessibilityLabel": "8 person dining table off the kitchen with views of the Hudson.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/4436c19b-0aea-48b6-8604-081652173c21.jpeg",
+								"aspectRatio": 1.4992592592592593,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Upper level",
+								"accessibilityLabel": "Upper level",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/30db3ad6-d67d-4cb6-b40c-b0f1f8cbf59c.jpeg",
+								"aspectRatio": 1.3333333333333333,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Bedroom 1",
+						"images": [
+							{
+								"caption": "Master Bedroom\n",
+								"accessibilityLabel": "Master Bedroom\n",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/9d1c0d4b-6467-41fc-91b7-84e0ff0600f5.jpeg",
+								"aspectRatio": 1.4992592592592593,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Master bedroom with king sized bed, a deck, and views of the Hudson. ",
+								"accessibilityLabel": "Master bedroom with king sized bed, a deck, and views of the Hudson. ",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/7ecba128-4a65-4a29-bd83-8b6ea2950439.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Bedroom 2",
+						"images": [
+							{
+								"caption": "2nd bedroom with queen bed. ",
+								"accessibilityLabel": "2nd bedroom with queen bed. ",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/536062dc-013b-4513-b18a-60d065e69362.jpeg",
+								"aspectRatio": 1.4992592592592593,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Bedroom 3",
+						"images": [
+							{
+								"caption": "3rd bedroom with two twin beds. ",
+								"accessibilityLabel": "3rd bedroom with two twin beds. ",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/06f6a92e-71d0-4b59-8df1-665117521a84.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "3rd Bedroom",
+								"accessibilityLabel": "3rd Bedroom",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/39f5a118-12c5-42db-88cc-988cb3ffe7aa.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Bedroom 4",
+						"images": [
+							{
+								"caption": "4th bedroom downstairs with deck, connecting bathroom, and river views.",
+								"accessibilityLabel": "4th bedroom downstairs with deck, connecting bathroom, and river views.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/2c77d58b-15a5-4b9c-aec4-5b975729c937.jpeg",
+								"aspectRatio": 1.4992592592592593,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Bedroom 5",
+						"images": [
+							{
+								"caption": "Office with pull out bed.",
+								"accessibilityLabel": "Office with pull out bed.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/0068b7f4-126f-41c6-8f99-7b77bd719b4b.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Office adjustable height desk.",
+								"accessibilityLabel": "Office adjustable height desk.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/157dd107-ac85-4266-8548-6af84355909c.jpeg",
+								"aspectRatio": 0.75,
+								"orientation": "PORTRAIT"
+							}
+						]
+					},
+					{
+						"title": "Full bathroom 1",
+						"images": [
+							{
+								"caption": "Bathroom that connects to the 4th bedroom and to the downstairs living area. ",
+								"accessibilityLabel": "Bathroom that connects to the 4th bedroom and to the downstairs living area. ",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/3ca388ae-1a66-41af-8e7a-a2568d6675f7.jpeg",
+								"aspectRatio": 0.6669960474308301,
+								"orientation": "PORTRAIT"
+							}
+						]
+					},
+					{
+						"title": "Full bathroom 2",
+						"images": [
+							{
+								"caption": "2nd bathroom with tub/shower.",
+								"accessibilityLabel": "2nd bathroom with tub/shower.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/8947b532-41fb-4328-80df-6b905a985143.jpeg",
+								"aspectRatio": 0.6669960474308301,
+								"orientation": "PORTRAIT"
+							}
+						]
+					},
+					{
+						"title": "Full bathroom 3",
+						"images": [
+							{
+								"caption": "Private bathroom off of the master bedroom with shower and a bidet. ",
+								"accessibilityLabel": "Private bathroom off of the master bedroom with shower and a bidet. ",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/06904bc1-2b41-46ef-88e8-18d63ac462d4.jpeg",
+								"aspectRatio": 1.4992592592592593,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Half bathroom",
+						"images": [
+							{
+								"caption": "Half bathroom off of the kitchen. ",
+								"accessibilityLabel": "Half bathroom off of the kitchen. ",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/7963a0c2-7bff-475c-bf2c-218d07c76e29.jpeg",
+								"aspectRatio": 0.6669960474308301,
+								"orientation": "PORTRAIT"
+							}
+						]
+					},
+					{
+						"title": "Backyard",
+						"images": [
+							{
+								"caption": "Enjoy epic views of the Hudson River, Beacon & beyond.",
+								"accessibilityLabel": "Enjoy epic views of the Hudson River, Beacon & beyond.",
+								"src": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/52248ddc-3cc8-438e-be03-3175f10bfbcc.jpeg",
+								"aspectRatio": 1.333565945568737,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 2",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/addf3e87-92d2-4a54-9f1a-2adc387966d0.jpeg",
+								"aspectRatio": 1.3333333333333333,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 3",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/d7fc36ee-81ae-4fbd-a809-52222c64238c.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 4",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/ae5d575b-92be-4335-b8b9-78204d7ff6bf.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 5",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/d84e9d3c-9057-4212-b183-c7d158fd2093.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 6",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/f0b8eecd-a1f8-4ee4-a8c5-1cdcdc4aa976.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Beautiful new gunnite pool open from late May until mid September!",
+								"accessibilityLabel": "Beautiful new gunnite pool open from late May until mid September!",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/05928ce6-01ff-4829-bcde-9670e2a03c22.jpeg",
+								"aspectRatio": 1.4072434607645876,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 8",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/802bfe81-380c-4658-a469-46a605ed2cb4.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 9",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/4e904d59-ddd3-41e4-93c4-6779db038490.jpeg",
+								"aspectRatio": 1.3119365308330329,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 10",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/2231e2a5-72f8-461c-b138-54e1da260018.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Enjoy the outdoor firepit while watching the Hudson River & wildlife.",
+								"accessibilityLabel": "Enjoy the outdoor firepit while watching the Hudson River & wildlife.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/54408628-d233-43b2-af50-b0373fb507df.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "",
+								"accessibilityLabel": "Backyard image 12",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/4d472437-b02d-4159-b566-68a836a37759.jpeg",
+								"aspectRatio": 1.4996249062265565,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 13",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/7140a6a9-6ba6-4cda-9420-288167ad18e8.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 14",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/a28bac8a-ee30-4354-bdc9-0ae89acb264e.jpeg",
+								"aspectRatio": 0.6665,
+								"orientation": "PORTRAIT"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Backyard image 15",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/2df00789-03e2-480f-a5e6-76ea2913b433.jpeg",
+								"aspectRatio": 1.3333333333333333,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Patio",
+						"images": [
+							{
+								"caption": "8 person dining table on upper deck with gas grill. ",
+								"accessibilityLabel": "8 person dining table on upper deck with gas grill. ",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/062d4c5e-2f69-4f76-bf14-c3c4b8213beb.jpeg",
+								"aspectRatio": 1.5003706449221645,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Patio image 2",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/1880c671-fea4-44a8-b95b-9da58f051d2f.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Exterior",
+						"images": [
+							{
+								"caption": null,
+								"accessibilityLabel": "Exterior image 1",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/6f84933f-a041-4112-b345-a2f8793d5c50.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Front of House with Hudson River beyond.",
+								"accessibilityLabel": "Front of House with Hudson River beyond.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/54cacfb1-fae2-4af6-9e7f-3d85f91a86e3.jpeg",
+								"aspectRatio": 1.4992592592592593,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Exterior image 3",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/693a72ad-3d07-4750-bbb9-a480a7d97cbb.jpeg",
+								"aspectRatio": 1.3333333333333333,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Game room",
+						"images": [
+							{
+								"caption": "Game room with pool table, fooseball, and work out area.",
+								"accessibilityLabel": "Game room with pool table, fooseball, and work out area.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/bcaeca6a-8a05-4ee5-8bfa-cc86a8045c59.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Game room workout area.",
+								"accessibilityLabel": "Game room workout area.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/989e0f93-f21b-4e44-a7c7-3cca21bcc42c.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "view from game room into downstairs great room.",
+								"accessibilityLabel": "view from game room into downstairs great room.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/94dda041-cbcd-4d10-bc49-784a4bce82ca.jpeg",
+								"aspectRatio": 1.4992592592592593,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Sunroom",
+						"images": [
+							{
+								"caption": "",
+								"accessibilityLabel": "Sunroom image 1",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/2c058273-1d17-48c0-ae7c-854cc68b9989.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "River views all around from the enclosed porch.  The perfect spot for a glass of wine or a late afternoon nap.",
+								"accessibilityLabel": "River views all around from the enclosed porch.  The perfect spot for a glass of wine or a late afternoon nap.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/430ada34-f00e-4788-8b60-792e59d8ef63.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					},
+					{
+						"title": "Additional photos",
+						"images": [
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 1",
+								"src": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/711b3443-e480-4e29-9085-86062c04073a.jpeg",
+								"aspectRatio": 1.3335297583971715,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 2",
+								"src": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/742f294c-fc89-4be7-a454-f8dca773fe1b.jpeg",
+								"aspectRatio": 1.5,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 3",
+								"src": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/a81b10d1-b0b5-4d76-a343-72952f9cf85e.jpeg",
+								"aspectRatio": 1.5,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 4",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/6ee4f6d9-5fb5-4c8d-a09f-c58c3b4f69fc.jpeg",
+								"aspectRatio": 1.5003750937734435,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 5",
+								"src": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/ab7042e6-d5c6-4526-bebc-9157eefedd06.jpeg",
+								"aspectRatio": 1.336734693877551,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 6",
+								"src": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/b6ead391-80e8-4571-9536-ec02a8f1eaa2.jpeg",
+								"aspectRatio": 1.5,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 7",
+								"src": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/2325fc06-0d23-476a-9102-14e5cb2ac937.jpeg",
+								"aspectRatio": 1.5,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": "Stairs from Great Room looking up toward Dining Room.",
+								"accessibilityLabel": "Stairs from Great Room looking up toward Dining Room.",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/f7dbd667-df54-4340-b653-7f47538f1601.jpeg",
+								"aspectRatio": 0.6669960474308301,
+								"orientation": "PORTRAIT"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 9",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/1c35842e-957c-4d3b-8495-a36483bf68bd.jpeg",
+								"aspectRatio": 0.6665,
+								"orientation": "PORTRAIT"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 10",
+								"src": "https://a0.muscache.com/im/pictures/miso/Hosting-578897320179146437/original/d254f48b-f109-4923-93eb-3bc3d4eaf8d0.jpeg",
+								"aspectRatio": 1.4992592592592593,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 11",
+								"src": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/2cec90e7-1d52-41c7-824e-a03ce7db47fc.jpeg",
+								"aspectRatio": 1.5,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 12",
+								"src": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/f5d221c7-a9d4-4667-ac25-2220c148b6eb.jpeg",
+								"aspectRatio": 1.3739153300026294,
+								"orientation": "LANDSCAPE"
+							},
+							{
+								"caption": null,
+								"accessibilityLabel": "Additional photos image 13",
+								"src": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NTc4ODk3MzIwMTc5MTQ2NDM3/original/7ac7c428-998f-40e1-8112-1271d292f927.jpeg",
+								"aspectRatio": 1.5,
+								"orientation": "LANDSCAPE"
+							}
+						]
+					}
+				]
+			},
+			"reviews": [
+				{
+					"id": "1292880606699000829",
+					"rating": 5,
+					"date": "1 day ago",
+					"comment": "Gorgeous views and lots of outdoor space on both floors. The house is very well laid out with one large open central space that ensures great sunlight and views wherever you are and makes it easy to find/talk to everyone. With a well equipped kitchen, a fireplace on each floor, a hot tub right outside the living room, and a basket full of blankets, Garrett's place seems perfectly equipped for a comfortable stay.",
+					"reviewer": {
+						"name": "Denis",
+						"location": "New York, New York",
+						"id": "238828",
+						"photo": "https://a0.muscache.com/im/users/238828/profile_pic/1284862687/original.jpg"
+					},
+					"highlight": "Stayed a few nights",
+					"response": null
+				},
+				{
+					"id": "1287770417655744560",
+					"rating": 5,
+					"date": "1 week ago",
+					"comment": "Our group required all five bedrooms but that meant every adult or couple had their own space. It was wonderful- everyone felt \"treated\" in the beautiful home. We did takeout Thai food on Friday and we cooked a family style dinner on Saturday and we felt it was a perfect opportunity to share an early Thanksgiving dinner. Many thanks for offering your spacious, lovely home!",
+					"reviewer": {
+						"name": "Kathryn",
+						"location": "Irvine, California",
+						"id": "7919941",
+						"photo": "https://a0.muscache.com/im/users/7919941/profile_pic/1376202256/original.jpg"
+					},
+					"highlight": "Stayed with a pet",
+					"response": null
+				},
+				{
+					"id": "1282779012056225837",
+					"rating": 5,
+					"date": "2 weeks ago",
+					"comment": "My family and I had an amazing stay! It was the perfect space for all of us with tons to do. The views were spectacular. We felt at home and will absolutely be coming back. Thanks for such a memorable time!",
+					"reviewer": {
+						"name": "Yudelka",
+						"location": "New York, New York",
+						"id": "31669578",
+						"photo": "https://a0.muscache.com/im/pictures/user/b8469367-3779-4aa1-910a-88377fc2fcdc.jpg"
+					},
+					"highlight": "Stayed with a pet",
+					"response": null
+				},
+				{
+					"id": "1279817027911152378",
+					"rating": 5,
+					"date": "2 weeks ago",
+					"comment": "Great stay! Would love to come back.",
+					"reviewer": {
+						"name": "Gauthier",
+						"location": "New York, New York",
+						"id": "39328819",
+						"photo": "https://a0.muscache.com/im/pictures/user/3e99593d-09ba-42e7-b3fb-716661055ffa.jpg"
+					},
+					"highlight": "Group trip",
+					"response": null
+				},
+				{
+					"id": "1276886786333723393",
+					"rating": 5,
+					"date": "3 weeks ago",
+					"comment": "Excellent stay, a lovely space for all of us to gather - beautiful surroundings as well :)",
+					"reviewer": {
+						"name": "Sarina",
+						"location": "New York, New York",
+						"id": "164835027",
+						"photo": "https://a0.muscache.com/im/pictures/user/bca83bea-073e-4bfd-b886-9946e32872e4.jpg"
+					},
+					"highlight": "Group trip",
+					"response": null
+				},
+				{
+					"id": "1267523371917562735",
+					"rating": 5,
+					"date": "October 2024",
+					"comment": "6 of us slept comfortably in this spacious home, more than enough room for everybody & not to be on top of each other, but the down side of the space is that its on 2 levels, the stairs to get to the lower level of the house & to get down to the beautiful pool & fire pit area, if you have somebody who has difficulty with their legs like my elderly mother, they won't be able to enjoy the lower level of house. The views of the Hudson River are spectacular & unobtrusive from any level of the house, my mother enjoyed sitting in the beautiful & comfortable screened in porch & soaked up the panoramic views. The bathrooms are dated, but fits the retro vibe of the house, which is tastefully decorated. Also I have to mention, I couldn't figure out why there were earplugs in each bathroom, soon enough we figured out trains run day & night blowing it's horn at crossings, it takes a little getting used too. But overall, we loved the house with all it's character & views, it did not disappoint !!!",
+					"reviewer": {
+						"name": "Elizabeth",
+						"location": "Brick Township, New Jersey",
+						"id": "468144375",
+						"photo": "https://a0.muscache.com/im/pictures/user/c8b2da90-799f-46c9-bf55-9caa7dd95179.jpg"
+					},
+					"highlight": "Group trip",
+					"response": null
+				},
+				{
+					"id": "1246494100051657469",
+					"rating": 5,
+					"date": "September 2024",
+					"comment": "Great house and service.",
+					"reviewer": {
+						"name": "Marco",
+						"location": "New York, New York",
+						"id": "119929155",
+						"photo": "https://a0.muscache.com/im/pictures/user/0262e374-f6cc-407c-9c39-1760f78cebd5.jpg"
+					},
+					"highlight": "Stayed with a pet",
+					"response": null
+				},
+				{
+					"id": "1239273336016863153",
+					"rating": 5,
+					"date": "September 2024",
+					"comment": "The house was absolutely spotless and beautiful decorated, and the Hudson River view was amazing. The house was pet friendly and our dog really enjoyed the outdoor space. <br/>The host was attentive and make sure everything was in order for our arrival. <br/>We really enjoyed our stay!!",
+					"reviewer": {
+						"name": "Diana",
+						"location": "Edison, New Jersey",
+						"id": "240184308",
+						"photo": "https://a0.muscache.com/im/pictures/user/b7e5f243-1da4-4f5a-a08d-557b7c6feb8c.jpg"
+					},
+					"highlight": "Stayed with a pet",
+					"response": null
+				},
+				{
+					"id": "1236995040258118832",
+					"rating": 5,
+					"date": "September 2024",
+					"comment": "This is by far one of our favorite places to stay near the city. The view and scenery is unreal, and the hosts are always incredibly easy to deal with. Can’t wait for our next visit.!",
+					"reviewer": {
+						"name": "MischaVon-Derek",
+						"location": "New York, New York",
+						"id": "70824665",
+						"photo": "https://a0.muscache.com/im/pictures/user/4fb43611-b3c2-4c67-a24b-3141c2d9ce3e.jpg"
+					},
+					"highlight": "Group trip",
+					"response": null
+				},
+				{
+					"id": "1234882561990170776",
+					"rating": 5,
+					"date": "August 2024",
+					"comment": "My family and I had the most incredible stay at this stunning mid-century modern gem! The property is a perfect blend of vintage charm and modern luxury, fully stocked with everything you could possibly need. The views of the Hudson River are absolutely breathtaking, offering a serene and picturesque backdrop to our stay.<br/>One of the many highlights was definitely the beautiful pool—an oasis of relaxation with plenty of seating and space to unwind. Whether you're lounging by the water or sipping your morning coffee on the deck overlooking the river, every moment here feels like a dream.<br/>The attention to detail in the design and amenities is impeccable. The hosts were thoughtful and responsive, ensuring our stay was nothing short of perfect. I can’t recommend this place highly enough—it’s the ideal getaway for anyone looking to experience both comfort and style in a truly unique setting. Thank you so much Garrett and Laura!",
+					"reviewer": {
+						"name": "Monica L.",
+						"location": "New Jersey, United States",
+						"id": "15338177",
+						"photo": "https://a0.muscache.com/im/pictures/user/User/original/8b8651e1-edee-45d8-88d6-bef5c485aee4.jpeg"
+					},
+					"highlight": "Stayed with kids",
+					"response": null
+				},
+				{
+					"id": "1230460858348389826",
+					"rating": 5,
+					"date": "August 2024",
+					"comment": "Beautiful house in a stunning setting!",
+					"reviewer": {
+						"name": "Blake",
+						"location": "New York, New York",
+						"id": "13091922",
+						"photo": "https://a0.muscache.com/im/users/13091922/profile_pic/1394721367/original.jpg"
+					},
+					"highlight": "Stayed with kids",
+					"response": null
+				},
+				{
+					"id": "1225386270165352572",
+					"rating": 5,
+					"date": "August 2024",
+					"comment": "I recently stayed at this beautiful house upstate, and it was an incredible experience from start to finish. The highlight of the property was undoubtedly the amazing pool, which provided the perfect setting for relaxation and fun. The house itself was fully equipped with everything we needed, making our stay comfortable and convenient. The host was extremely responsive and attentive, ensuring that all our needs were met promptly. Overall, this place exceeded our expectations, and I would highly recommend it to anyone looking for a relaxing getaway.",
+					"reviewer": {
+						"name": "Iryna",
+						"location": "New York, United States",
+						"id": "115035973",
+						"photo": "https://a0.muscache.com/im/pictures/user/User-115035973/original/2b715e6a-0a59-4d25-9267-742d9ebd32a8.jpeg"
+					},
+					"highlight": "Group trip",
+					"response": null
+				},
+				{
+					"id": "1223236510263860957",
+					"rating": 5,
+					"date": "August 2024",
+					"comment": "Outstanding home where we were able to host a weekend birthday retreat with 8 other friends. Lots of spaces for people to hang out and also have their space. The property is stunning snd so easy to get to from the city.<br/>Everyone loved it and would gladly book again",
+					"reviewer": {
+						"name": "Zag & Alice",
+						"location": "New York, New York",
+						"id": "3118346",
+						"photo": "https://a0.muscache.com/im/users/3118346/profile_pic/1364010737/original.jpg"
+					},
+					"highlight": "Stayed with a pet",
+					"response": null
+				},
+				{
+					"id": "1219594893965334779",
+					"rating": 5,
+					"date": "August 2024",
+					"comment": "The house is fabulous. Just as beautiful as the pics. The dogs loved the huge yard, and the pool and outdoor lounge space was gorgeous. The kitchen is easy to navigate and well stocked. The beds are very comfortable. The sound of the train is notable, but we were fine with it. We were there for a multi generation family vacation and the space worked great for that (older family members needed some assistance with the outdoor stairs, but that was doable).",
+					"reviewer": {
+						"name": "Daniella",
+						"location": "Moorestown, New Jersey",
+						"id": "20945136",
+						"photo": "https://a0.muscache.com/im/pictures/user/cf11d3f3-f878-4dce-8284-e9498a94310e.jpg"
+					},
+					"highlight": "Stayed with a pet",
+					"response": null
+				},
+				{
+					"id": "1215282110355184294",
+					"rating": 5,
+					"date": "August 2024",
+					"comment": "Amazing Airbnb in an absolutely stunning location overlooking the Hudson River. Felt private while still just a few minutes drive from civilization should you need anything. Large and beautifully designed home with lots of great artwork. Everything was clean and exactly as pictured. Great amenities and the pool was gorgeous. Host was nice and quick to respond with any needs. One of the best Airbnbs that I have stayed in. We stayed with 2 adults + 2 kids + 2 grandparents & a dog and had plenty of space. The family had a wonderful week together in this fantastic home. Would definitely stay again and can highly recommend.",
+					"reviewer": {
+						"name": "Michael",
+						"location": "New York, New York",
+						"id": "35877638",
+						"photo": "https://a0.muscache.com/im/pictures/user/0e3eb9fb-27ec-4ac7-a210-3f55a20b9843.jpg"
+					},
+					"highlight": "Stayed with a pet",
+					"response": null
+				},
+				{
+					"id": "1211006007172075729",
+					"rating": 5,
+					"date": "July 2024",
+					"comment": "The house and it’s surroundings are beautiful. It was easy to communicate and Laura was very responsive to our questions. The house was organized and had everything we needed for the week. The bathrooms are a bit outdated but it met all of our needs. You won’t regret your time spent at this house!",
+					"reviewer": {
+						"name": "Belinda",
+						"location": "New York, New York",
+						"id": "120721919",
+						"photo": "https://a0.muscache.com/im/pictures/user/96551083-ce6a-4d0f-819e-5b524fbd107f.jpg"
+					},
+					"highlight": "Stayed with kids",
+					"response": null
+				},
+				{
+					"id": "1206630189395957378",
+					"rating": 5,
+					"date": "July 2024",
+					"comment": "Laura was very responsive prior to and during our stay and was super helpful. <br/>The highlight of the property is the patio and pool area as well the views. There is a railroad line that runs along the water that can be noisy when they use the horn but it didn't bother us all that much. The interior is dated but that's the style of the house. <br/>The house is close to a shopping center for last minute things but remote enough to be private. It's a quick ride to Beacon which is great too. <br/>All in all would def stay again!",
+					"reviewer": {
+						"name": "Mishel",
+						"location": "Great Neck, New York",
+						"id": "126837730",
+						"photo": "https://a0.muscache.com/im/pictures/user/77e0cea8-5e9f-4f13-bc44-1a009b0c9b35.jpg"
+					},
+					"highlight": "Group trip",
+					"response": null
+				},
+				{
+					"id": "1204384712510774582",
+					"rating": 5,
+					"date": "July 2024",
+					"comment": "This home was amazing. We were staying here for a week with family - adults, teens, and toddlers. All coming not far from Brooklyn and Queens. We were already familiar with the area and others surrounding it and had plans to go to DIA, storm king, and the Newburgh Art Weekend. <br/>The home was clean, quiet, and well air conditioned. The view was amazing. And the home had all the right comforts and rooms needed for a mix of chilling, fun and games, and family bonding time. The sun room was particularly great for our toddlers to play “outside” but kept inside during the heatwave.<br/>The upstairs banister railing though has very wide bars. So if you have toddlers at that stage under 2yo it was not safe and pretty scary. We mostly had them in the sun room, downstairs, or outside by the pool. I was prepared by seeing this in the photos but just a word of caution.<br/>We would stay again! Thank you!",
+					"reviewer": {
+						"name": "Lan",
+						"location": "New York, New York",
+						"id": "1260725",
+						"photo": "https://a0.muscache.com/im/pictures/user/User-1260725/original/b32783b0-167a-47db-8b8e-76629a4a869a.jpeg"
+					},
+					"highlight": "Stayed with a pet",
+					"response": null
+				},
+				{
+					"id": "1200793631443929281",
+					"rating": 5,
+					"date": "July 2024",
+					"comment": "The house was perfect for our family get together. It was fully stocked with everything we needed. The pool and the view were the highlights. We spent many hours in and beside the pool each day. Made great memories and would highly recommend!",
+					"reviewer": {
+						"name": "Anjuli",
+						"location": "San Diego, California",
+						"id": "170183705",
+						"photo": "https://a0.muscache.com/im/pictures/user/353a2888-42c0-4bc0-84c2-69463b6642db.jpg"
+					},
+					"highlight": "Stayed with a pet",
+					"response": null
+				},
+				{
+					"id": "1197885501296234343",
+					"rating": 5,
+					"date": "July 2024",
+					"comment": "Our stay at Garret and Laura's place was amazing. The kids loved the pool and I enjoyed the spectacular view. The place was very comfortable and clean. Everything went smooth from check-in to check-out. Thank you!",
+					"reviewer": {
+						"name": "Amro",
+						"location": "Las Animas, Colorado",
+						"id": "81317124",
+						"photo": "https://a0.muscache.com/im/pictures/user/cc9138fd-18b9-4148-9eab-14a1d2f30973.jpg"
+					},
+					"highlight": "Stayed with kids",
+					"response": null
+				},
+				{
+					"id": "1196491015791964043",
+					"rating": 5,
+					"date": "July 2024",
+					"comment": "Great place, great pool, great view",
+					"reviewer": {
+						"name": "Steve",
+						"location": "New York, New York",
+						"id": "395971460",
+						"photo": "https://a0.muscache.com/im/pictures/user/9dccd2dc-b0d4-499b-ab50-c07abcc5c99d.jpg"
+					},
+					"highlight": "Stayed with kids",
+					"response": null
+				},
+				{
+					"id": "1191367926171754317",
+					"rating": 5,
+					"date": "July 2024",
+					"comment": "We truly loved our stay and did not want to leave. The house, yard, and views were all beautiful. The photos do not do this place justice! The neighborhood is peaceful and secluded yet there are multiple restaurants and shops anywhere from 5-10 mins away. We spent most of our time in the sunroom looking out at the view or lounging outside by the pool. We look forward to coming back in the future.",
+					"reviewer": {
+						"name": "Magdalene",
+						"location": "Philadelphia, Pennsylvania",
+						"id": "63899593",
+						"photo": "https://a0.muscache.com/im/pictures/user/abe09ecb-72eb-4ebf-9962-26d8718adfc3.jpg"
+					},
+					"highlight": "Stayed with a pet",
+					"response": null
+				},
+				{
+					"id": "1189217187018121269",
+					"rating": 5,
+					"date": "June 2024",
+					"comment": "The house is absolutely gorgeous, and the location is stunning. It looked exactly like the photos. Laura and Garrett were very responsive and incredibly helpful before and during our stay. I would definitely stay here again.",
+					"reviewer": {
+						"name": "Jessica",
+						"location": "Cresskill, New Jersey",
+						"id": "171026752",
+						"photo": "https://a0.muscache.com/im/pictures/user/User-171026752/original/1e9d2ac1-a68a-47ae-b44a-87095b374e3e.jpeg"
+					},
+					"highlight": "Group trip",
+					"response": null
+				},
+				{
+					"id": "1185532400492572325",
+					"rating": 5,
+					"date": "June 2024",
+					"comment": "We had a wonderful stay at Hudson House! The hosts were extremely responsive to messages, and everything went smoothly. The care they take in making the home comfortable for guests shows!! Great place, incredible design, and amazing views. Two thumbs up; we will be coming back!!",
+					"reviewer": {
+						"name": "Vignesh",
+						"location": "New York, New York",
+						"id": "25870122",
+						"photo": "https://a0.muscache.com/im/users/25870122/profile_pic/1421421395/original.jpg"
+					},
+					"highlight": "Stayed with kids",
+					"response": null
+				}
+			]
+		}
+	}
+]
