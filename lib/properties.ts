@@ -47,7 +47,7 @@ export type VisualProperty = {
 	id: string
 	url: string
 	pricePerNight: number
-	cleaningPrice: number
+	cleaningPrice?: number
 } & (
 	| { status: "pending" }
 	| {
