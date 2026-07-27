@@ -18,6 +18,7 @@ export const properties = pgTable(
 		views: integer("views").notNull().default(0),
 		inquiries: integer("inquiries").notNull().default(0),
 		pricePerNight: integer("price_per_night").notNull().default(0),
+		cleaningPrice: integer("cleaning_price").notNull().default(0),
 		keyboxCode: text("keybox_code"),
 		driveUrl: text("drive_url"),
 		comment: text("comment"),
