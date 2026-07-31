@@ -24,15 +24,8 @@ export const metadata: Metadata = {
 		telephone: false
 	},
 	icons: [
-		{
-			rel: "icon",
-			type: "image/jpeg",
-			url: "/favicon.jpg"
-		},
-		{
-			rel: "apple-touch-icon",
-			url: "/favicon.jpg"
-		}
+		{ rel: "icon", type: "image/jpeg", url: "/favicon.jpg" },
+		{ rel: "apple-touch-icon", url: "/favicon.jpg" }
 	]
 }
 
@@ -50,7 +43,12 @@ export default function RootLayout({
 					<link rel="manifest" href="/manifest.json" />
 				</head>
 				<body className="pb-16">
-					{children}
+					<header className="fixed top-0 left-0 right-0 z-50 h-12 flex items-center justify-center bg-background/95 backdrop-blur border-b safe-area-top">
+						<a href="/dashboard" className="text-lg font-bold tracking-tight">Freshair</a>
+					</header>
+					<div className="pt-12">
+						{children}
+					</div>
 					<BottomNav />
 					<Toaster />
 				</body>
