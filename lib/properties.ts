@@ -72,14 +72,57 @@ export async function getExploreProperties(): Promise<ExploreProperty[]> {
 export async function incrementPropertyViews(propertyId: string) {
 	await db.update(properties).set({ views: sql`${properties.views} + 1` }).where(eq(properties.id, propertyId))
 }
+
 export async function incrementPropertyInquiries(propertyId: string) {
 	await db.update(properties).set({ inquiries: sql`${properties.inquiries} + 1` }).where(eq(properties.id, propertyId))
 }
+
 export async function updatePropertyPrice(propertyId: string, price: number) {
 	const { userId } = await auth()
 	if (!userId) throw new Error("Unauthorized")
 	await db.update(properties).set({ pricePerNight: price }).where(sql`${properties.id} = ${propertyId} AND ${properties.clerkId} = ${userId}`)
 	return { success: true }
+}
+
+// getListing — retourne un logement par ID
+export type ListingWithPrice = {
+	data: Listing["data"]
+	pricePerNight: number
+	keyboxCode: string | null
+	driveUrl: string | null
+	comment: string | null
+}
+
+export async function getListing(id: string): Promise<ListingWithPrice | null> {
+	const property = await db
+		.select({
+			listingData: properties.listingData,
+			pricePerNight: properties.pricePerNight,
+			keyboxCode: properties.keyboxCode,
+			driveUrl: properties.driveUrl,
+			comment: properties.comment
+		})
+		.from(properties)
+		.where(eq(properties.id, id))
+		.limit(1)
+		.then((rows) => rows[0])
+
+	if (!property || !property.listingData) return null
+
+	const listing = property.listingData as Listing
+	for (const room of listing.data.gallery.rooms) {
+		for (const image of room.images) {
+			image.orientation = image.orientation.toUpperCase() as "LANDSCAPE" | "PORTRAIT"
+		}
+	}
+
+	return {
+		data: listing.data,
+		pricePerNight: property.pricePerNight,
+		keyboxCode: property.keyboxCode,
+		driveUrl: property.driveUrl,
+		comment: property.comment
+	}
 }
 
 export type TodayProperty = { id: string; title: string; address: string | null; lat: number; lng: number; keyboxCode: string | null; pricePerNight: number }
