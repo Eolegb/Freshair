@@ -32,25 +32,24 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 	const [loading, setLoading] = useState(true)
 
 	// Charger les prestations du jour depuis la DB
-	useEffect(() => {
-		const today = new Date().toISOString().split("T")[0]
-		fetch(`/api/nomad/today?date=${today}&token=nomad-api-secret-2026`)
-			.then(r => r.json())
-			.then(data => {
-				if (data.prestations) {
-					const ids = data.prestations.map((p: any) => p.id)
-					setSelectedIds(ids)
-					setTodayPrestations(data.prestations)
-					localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
-				}
-			})
-			.catch(() => {
-				// Fallback localStorage
-				const stored = localStorage.getItem(STORAGE_KEY)
-				if (stored) { try { setSelectedIds(JSON.parse(stored)) } catch {} }
-			})
-			.finally(() => setLoading(false))
-	}, [])
+		useEffect(() => {
+			const today = new Date().toISOString().split("T")[0]
+			fetch(`/api/nomad/today?date=${today}&token=nomad-api-secret-2026`)
+				.then(r => r.json())
+				.then(data => {
+					if (data.prestations && data.prestations.length > 0) {
+						const ids = data.prestations.map((p: any) => p.id)
+						setSelectedIds(ids)
+						setTodayPrestations(data.prestations)
+						localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
+					}
+				})
+				.catch(() => {
+					const stored = localStorage.getItem(STORAGE_KEY)
+					if (stored) { try { setSelectedIds(JSON.parse(stored)) } catch {} }
+				})
+				.finally(() => setLoading(false))
+				}, [])
 
 	const saveSelection = useCallback((ids: string[]) => {
 		setSelectedIds(ids)
