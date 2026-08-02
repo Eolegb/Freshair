@@ -1,11 +1,14 @@
 import type { Listing } from "@/data/types"
 import {
+	date,
 	index,
 	integer,
 	json,
 	pgTable,
+	primaryKey,
 	text,
-	timestamp
+	timestamp,
+	uniqueIndex
 } from "drizzle-orm/pg-core"
 
 export const properties = pgTable(
@@ -53,8 +56,22 @@ export const scrapingJobs = pgTable(
 	})
 )
 
+export const cleaningSchedule = pgTable(
+	"cleaning_schedule",
+	{
+		date: date("date").notNull(),
+		propertyId: text("property_id")
+			.references(() => properties.id, { onDelete: "cascade" })
+			.notNull()
+	},
+	(table) => ({
+		pk: primaryKey({ columns: [table.date, table.propertyId] })
+	})
+)
+
 // Types for type safety
 export type Property = typeof properties.$inferSelect
 export type NewProperty = typeof properties.$inferInsert
 export type ScrapingJob = typeof scrapingJobs.$inferSelect
 export type NewScrapingJob = typeof scrapingJobs.$inferInsert
+export type CleaningSchedule = typeof cleaningSchedule.$inferSelect

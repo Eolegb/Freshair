@@ -13,7 +13,7 @@ import type { TodayProperty } from "@/lib/properties"
 import { Bus, Key, MapPin, Navigation, Plus, Search, X } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 const TodayMap = dynamic(() => import("./TodayMap").then(m => ({ default: m.TodayMap })), {
 	ssr: false,
@@ -21,8 +21,20 @@ const TodayMap = dynamic(() => import("./TodayMap").then(m => ({ default: m.Toda
 })
 
 const STORAGE_KEY = "freshair_today"
+const API_TOKEN = "nomad-api-secret-2026"
 
 type CommonLine = { line: string; color: string; servedBy: number; terminus: string }
+
+async function saveToApi(ids: string[]) {
+	const today = new Date().toISOString().split("T")[0]
+	try {
+		await fetch("/api/nomad/today", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ token: API_TOKEN, date: today, property_ids: ids })
+		})
+	} catch {}
+}
 
 export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 	const [selectedIds, setSelectedIds] = useState<string[]>([])
@@ -30,30 +42,36 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 	const [commonLines, setCommonLines] = useState<CommonLine[]>([])
 	const [todayPrestations, setTodayPrestations] = useState<any[]>([])
 	const [loading, setLoading] = useState(true)
+	const initialized = useRef(false)
 
-	// Charger les prestations du jour depuis la DB
-		useEffect(() => {
-			const today = new Date().toISOString().split("T")[0]
-			fetch(`/api/nomad/today?date=${today}&token=nomad-api-secret-2026`)
-				.then(r => r.json())
-				.then(data => {
-					if (data.prestations && data.prestations.length > 0) {
-						const ids = data.prestations.map((p: any) => p.id)
-						setSelectedIds(ids)
-						setTodayPrestations(data.prestations)
-						localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
-					}
-				})
-				.catch(() => {
-					const stored = localStorage.getItem(STORAGE_KEY)
-					if (stored) { try { setSelectedIds(JSON.parse(stored)) } catch {} }
-				})
-				.finally(() => setLoading(false))
-				}, [])
+	useEffect(() => {
+		const today = new Date().toISOString().split("T")[0]
+		fetch(`/api/nomad/today?date=${today}&token=${API_TOKEN}`)
+			.then(r => r.json())
+			.then(data => {
+				if (data.prestations && data.prestations.length > 0) {
+					const ids = data.prestations.map((p: any) => p.id)
+					setSelectedIds(ids)
+					setTodayPrestations(data.prestations)
+					localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
+				}
+			})
+			.catch(() => {
+				const stored = localStorage.getItem(STORAGE_KEY)
+				if (stored) { try { setSelectedIds(JSON.parse(stored)) } catch {} }
+			})
+			.finally(() => {
+				setLoading(false)
+				initialized.current = true
+			})
+	}, [])
 
 	const saveSelection = useCallback((ids: string[]) => {
 		setSelectedIds(ids)
 		localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
+		if (initialized.current) {
+			saveToApi(ids)
+		}
 	}, [])
 
 	const toggleProperty = useCallback(

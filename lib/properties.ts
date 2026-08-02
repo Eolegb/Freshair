@@ -4,7 +4,7 @@ import type { Listing } from "@/data/types"
 import { type NewProperty, properties } from "@/db/schema"
 import { auth } from "@clerk/nextjs/server"
 import { desc, eq, sql } from "drizzle-orm"
-import { nanoid } from "nanoid"
+import crypto from "node:crypto"
 import "server-only"
 import { z } from "zod"
 import { db } from "./db"
@@ -16,7 +16,7 @@ export async function createProperty(url: string) {
 	const { userId } = await auth()
 	if (!userId) throw new Error("Unauthorized")
 	await db.insert(properties).values({
-		id: nanoid(),
+		id: crypto.randomUUID(),
 		clerkId: userId,
 		url: validatedUrl,
 		listingData: null

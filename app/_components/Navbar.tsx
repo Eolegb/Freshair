@@ -7,10 +7,9 @@ export function Navbar() {
 			<div className="container mx-auto flex h-12 items-center justify-center px-4">
 				<Link
 					href="/explore"
-					className="font-display text-xl font-bold tracking-tight"
+					className="font-display text-xl font-bold tracking-tight text-primary"
 				>
-					<span className="text-foreground">Fresh</span>
-					<span className="text-primary">air</span>
+					Freshair
 				</Link>
 			</div>
 		</nav>
