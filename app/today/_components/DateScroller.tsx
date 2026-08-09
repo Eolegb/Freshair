@@ -8,6 +8,14 @@ interface DateScrollerProps {
 }
 
 export function DateScroller({ onDateChange }: DateScrollerProps) {
+	const [currentMonth, setCurrentMonth] = useState(() => {
+		if (typeof window !== "undefined") {
+			const stored = localStorage.getItem("freshair_current_month")
+			if (stored) return new Date(stored)
+		}
+		return new Date()
+	})
+
 	const [selectedDate, setSelectedDate] = useState(() => {
 		if (typeof window !== "undefined") {
 			const stored = localStorage.getItem("freshair_selected_date")
@@ -19,39 +27,65 @@ export function DateScroller({ onDateChange }: DateScrollerProps) {
 	const scrollContainerRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
+		localStorage.setItem("freshair_current_month", currentMonth.toISOString())
+	}, [currentMonth])
+
+	useEffect(() => {
 		localStorage.setItem("freshair_selected_date", selectedDate.toISOString())
 		onDateChange?.(selectedDate)
 	}, [selectedDate, onDateChange])
 
-	// Générer les dates (30 jours avant et après aujourd'hui)
-	const getDateRange = () => {
-		const today = new Date()
+	// Générer les dates du mois courant
+	const getDaysInMonth = (date: Date) => {
+		return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+	}
+
+	const getFirstDayOfMonth = (date: Date) => {
+		return new Date(date.getFullYear(), date.getMonth(), 1).getDay()
+	}
+
+	const getDates = () => {
+		const daysInMonth = getDaysInMonth(currentMonth)
+		const firstDay = getFirstDayOfMonth(currentMonth)
 		const dates = []
-		for (let i = -30; i <= 30; i++) {
-			const date = new Date(today)
-			date.setDate(date.getDate() + i)
-			dates.push(date)
+
+		// Jours du mois précédent
+		const prevMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1)
+		const daysInPrevMonth = getDaysInMonth(prevMonth)
+		for (let i = firstDay - 1; i >= 0; i--) {
+			const date = new Date(prevMonth.getFullYear(), prevMonth.getMonth(), daysInPrevMonth - i)
+			dates.push({ date, isCurrentMonth: false })
 		}
+
+		// Jours du mois courant
+		for (let day = 1; day <= daysInMonth; day++) {
+			const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day)
+			dates.push({ date, isCurrentMonth: true })
+		}
+
+		// Jours du mois suivant
+		const remainingDays = 42 - dates.length
+		for (let day = 1; day <= remainingDays; day++) {
+			const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, day)
+			dates.push({ date, isCurrentMonth: false })
+		}
+
 		return dates
 	}
 
-	const dateRange = getDateRange()
+	const handlePrevMonth = () => {
+		setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))
+	}
+
+	const handleNextMonth = () => {
+		setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))
+	}
 
 	const handleDateClick = useCallback((date: Date) => {
 		setSelectedDate(new Date(date.getFullYear(), date.getMonth(), date.getDate()))
 	}, [])
 
-	const handlePrev = () => {
-		if (scrollContainerRef.current) {
-			scrollContainerRef.current.scrollBy({ left: -100, behavior: "smooth" })
-		}
-	}
-
-	const handleNext = () => {
-		if (scrollContainerRef.current) {
-			scrollContainerRef.current.scrollBy({ left: 100, behavior: "smooth" })
-		}
-	}
+	const dates = getDates()
 
 	const isToday = (date: Date) => {
 		const today = new Date()
@@ -70,61 +104,71 @@ export function DateScroller({ onDateChange }: DateScrollerProps) {
 		)
 	}
 
+	const monthName = currentMonth.toLocaleDateString("fr-FR", { month: "long", year: "numeric" })
 	const dayLabels = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"]
 
 	return (
 		<div className="sticky top-12 z-40 bg-background/95 backdrop-blur border-b">
-			<div className="flex items-center gap-2 px-2 py-3">
-				{/* Bouton précédent */}
+			{/* Titre du mois avec navigation */}
+			<div className="flex items-center justify-between px-4 py-2 border-b">
 				<button
-					onClick={handlePrev}
-					className="p-1.5 hover:bg-muted rounded-lg transition-colors shrink-0"
+					onClick={handlePrevMonth}
+					className="p-1.5 hover:bg-muted rounded-lg transition-colors"
 					type="button"
+					aria-label="Mois précédent"
 				>
 					<ChevronLeft className="h-4 w-4" />
 				</button>
-
-				{/* Scroll horizontal des dates */}
-				<div
-					ref={scrollContainerRef}
-					className="flex gap-2 overflow-x-auto scrollbar-hide flex-1"
-					style={{ scrollBehavior: "smooth" }}
+				<h3 className="font-semibold text-sm capitalize min-w-32 text-center">
+					{monthName}
+				</h3>
+				<button
+					onClick={handleNextMonth}
+					className="p-1.5 hover:bg-muted rounded-lg transition-colors"
+					type="button"
+					aria-label="Mois suivant"
 				>
-					{dateRange.map((date) => {
-						const day = dayLabels[date.getDay()]
-						const dayNum = date.getDate()
+					<ChevronRight className="h-4 w-4" />
+				</button>
+			</div>
 
+			{/* Grille calendaire */}
+			<div className="px-2 py-3">
+				{/* En-têtes jours */}
+				<div className="grid grid-cols-7 gap-1 mb-2">
+					{dayLabels.map((day) => (
+						<div key={day} className="text-center text-xs font-semibold text-muted-foreground py-1">
+							{day}
+						</div>
+					))}
+				</div>
+
+				{/* Grille des dates */}
+				<div className="grid grid-cols-7 gap-1">
+					{dates.map((item, idx) => {
+						const { date, isCurrentMonth } = item
 						return (
 							<button
-								key={date.toISOString()}
+								key={idx}
 								onClick={() => handleDateClick(date)}
 								type="button"
 								className={`
-									flex flex-col items-center justify-center py-2 px-3 rounded-lg transition-all shrink-0 whitespace-nowrap
+									aspect-square rounded-lg text-sm font-medium transition-colors flex items-center justify-center
+									${!isCurrentMonth ? "opacity-30 text-muted-foreground" : ""}
 									${
 										isSelected(date)
-											? "bg-primary text-primary-foreground"
+											? "bg-primary text-primary-foreground font-bold"
 											: isToday(date)
-												? "bg-primary/10 text-primary border border-primary/20"
+												? "bg-primary/10 text-primary border border-primary/20 font-bold"
 												: "hover:bg-muted"
 									}
 								`}
 							>
-								<span className="text-xs font-semibold">{day}</span>
-								<span className="text-lg font-bold">{dayNum}</span>
+								{date.getDate()}
 							</button>
 						)
 					})}
 				</div>
-
-				{/* Bouton suivant */}
-				<button
-					onClick={handleNext}
-					className="p-1.5 hover:bg-muted rounded-lg transition-colors shrink-0"
-					type="button"
-				>
-					<ChevronRight className="h-4 w-4" />
-				</button>
 			</div>
 		</div>
 	)
