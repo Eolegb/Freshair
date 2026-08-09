@@ -104,27 +104,18 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 		return p.title.toLowerCase().includes(q) || (p.address || "").toLowerCase().includes(q)
 	})
 
-	const formattedDate = currentDate.toLocaleDateString("fr-FR", { 
-		weekday: "long", 
-		day: "numeric", 
-		month: "long" 
-	})
-
 	return (
 		<>
 			<DateScroller 
 				onDateChange={setCurrentDate}
 			/>
-			<div className="flex flex-col" style={{ height: "calc(100vh - 48px - 64px - 150px)" }}>
+			<div className="flex flex-col" style={{ height: "calc(100vh - 48px - 64px - 90px)" }}>
 				<TodayMap selected={selected} />
 
 				<div className="flex items-center justify-between px-4 py-3 border-b">
-					<div>
-						<p className="text-xs text-muted-foreground">{formattedDate}</p>
-						<h2 className="font-semibold text-sm">
-							{selected.length} logement{selected.length > 1 ? "s" : ""} - Planning
-						</h2>
-					</div>
+					<h2 className="font-semibold text-sm">
+						{selected.length} logement{selected.length > 1 ? "s" : ""} - Planning
+					</h2>
 					<Sheet>
 						<SheetTrigger asChild>
 							<Button size="sm" className="gap-1 rounded-full">
