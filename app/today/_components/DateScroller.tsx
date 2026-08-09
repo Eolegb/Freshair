@@ -1,22 +1,13 @@
 "use client"
 
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 interface DateScrollerProps {
 	onDateChange?: (date: Date) => void
-	onMonthChange?: (month: Date) => void
 }
 
-export function DateScroller({ onDateChange, onMonthChange }: DateScrollerProps) {
-	const [currentMonth, setCurrentMonth] = useState(() => {
-		if (typeof window !== "undefined") {
-			const stored = localStorage.getItem("freshair_month")
-			if (stored) return new Date(stored)
-		}
-		return new Date()
-	})
-
+export function DateScroller({ onDateChange }: DateScrollerProps) {
 	const [selectedDate, setSelectedDate] = useState(() => {
 		if (typeof window !== "undefined") {
 			const stored = localStorage.getItem("freshair_selected_date")
@@ -25,115 +16,115 @@ export function DateScroller({ onDateChange, onMonthChange }: DateScrollerProps)
 		return new Date()
 	})
 
-	useEffect(() => {
-		localStorage.setItem("freshair_month", currentMonth.toISOString())
-		onMonthChange?.(currentMonth)
-	}, [currentMonth, onMonthChange])
+	const scrollContainerRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
 		localStorage.setItem("freshair_selected_date", selectedDate.toISOString())
 		onDateChange?.(selectedDate)
 	}, [selectedDate, onDateChange])
 
-	const getDaysInMonth = (date: Date) => {
-		return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+	// Générer les dates (30 jours avant et après aujourd'hui)
+	const getDateRange = () => {
+		const today = new Date()
+		const dates = []
+		for (let i = -30; i <= 30; i++) {
+			const date = new Date(today)
+			date.setDate(date.getDate() + i)
+			dates.push(date)
+		}
+		return dates
 	}
 
-	const getFirstDayOfMonth = (date: Date) => {
-		return new Date(date.getFullYear(), date.getMonth(), 1).getDay()
+	const dateRange = getDateRange()
+
+	const handleDateClick = useCallback((date: Date) => {
+		setSelectedDate(new Date(date.getFullYear(), date.getMonth(), date.getDate()))
+	}, [])
+
+	const handlePrev = () => {
+		if (scrollContainerRef.current) {
+			scrollContainerRef.current.scrollBy({ left: -100, behavior: "smooth" })
+		}
 	}
 
-	const handlePrevMonth = useCallback(() => {
-		setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))
-	}, [currentMonth])
-
-	const handleNextMonth = useCallback(() => {
-		setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))
-	}, [currentMonth])
-
-	const handleDateClick = useCallback((day: number) => {
-		setSelectedDate(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day))
-	}, [currentMonth])
-
-	const daysInMonth = getDaysInMonth(currentMonth)
-	const firstDay = getFirstDayOfMonth(currentMonth)
-	const days = []
-
-	for (let i = 0; i < firstDay; i++) {
-		days.push(null)
+	const handleNext = () => {
+		if (scrollContainerRef.current) {
+			scrollContainerRef.current.scrollBy({ left: 100, behavior: "smooth" })
+		}
 	}
 
-	for (let day = 1; day <= daysInMonth; day++) {
-		days.push(day)
-	}
-
-	const monthName = currentMonth.toLocaleDateString("fr-FR", { month: "long", year: "numeric" })
-	const isToday = (day: number | null) => {
-		if (!day) return false
+	const isToday = (date: Date) => {
 		const today = new Date()
 		return (
-			day === today.getDate() &&
-			currentMonth.getMonth() === today.getMonth() &&
-			currentMonth.getFullYear() === today.getFullYear()
+			date.getDate() === today.getDate() &&
+			date.getMonth() === today.getMonth() &&
+			date.getFullYear() === today.getFullYear()
 		)
 	}
 
-	const isSelected = (day: number | null) => {
-		if (!day) return false
+	const isSelected = (date: Date) => {
 		return (
-			day === selectedDate.getDate() &&
-			currentMonth.getMonth() === selectedDate.getMonth() &&
-			currentMonth.getFullYear() === selectedDate.getFullYear()
+			date.getDate() === selectedDate.getDate() &&
+			date.getMonth() === selectedDate.getMonth() &&
+			date.getFullYear() === selectedDate.getFullYear()
 		)
 	}
+
+	const dayLabels = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"]
 
 	return (
 		<div className="sticky top-12 z-40 bg-background/95 backdrop-blur border-b">
-			<div className="px-4 py-3">
-				{/* Month Navigation */}
-				<div className="flex items-center justify-between mb-3">
-					<button
-						onClick={handlePrevMonth}
-						className="p-1 hover:bg-muted rounded-lg transition-colors"
-						type="button"
-					>
-						<ChevronLeft className="h-5 w-5" />
-					</button>
-					<h3 className="font-semibold text-sm capitalize">
-						{monthName}
-					</h3>
-					<button
-						onClick={handleNextMonth}
-						className="p-1 hover:bg-muted rounded-lg transition-colors"
-						type="button"
-					>
-						<ChevronRight className="h-5 w-5" />
-					</button>
+			<div className="flex items-center gap-2 px-2 py-3">
+				{/* Bouton précédent */}
+				<button
+					onClick={handlePrev}
+					className="p-1.5 hover:bg-muted rounded-lg transition-colors shrink-0"
+					type="button"
+				>
+					<ChevronLeft className="h-4 w-4" />
+				</button>
+
+				{/* Scroll horizontal des dates */}
+				<div
+					ref={scrollContainerRef}
+					className="flex gap-2 overflow-x-auto scrollbar-hide flex-1"
+					style={{ scrollBehavior: "smooth" }}
+				>
+					{dateRange.map((date) => {
+						const day = dayLabels[date.getDay()]
+						const dayNum = date.getDate()
+
+						return (
+							<button
+								key={date.toISOString()}
+								onClick={() => handleDateClick(date)}
+								type="button"
+								className={`
+									flex flex-col items-center justify-center py-2 px-3 rounded-lg transition-all shrink-0 whitespace-nowrap
+									${
+										isSelected(date)
+											? "bg-primary text-primary-foreground"
+											: isToday(date)
+												? "bg-primary/10 text-primary border border-primary/20"
+												: "hover:bg-muted"
+									}
+								`}
+							>
+								<span className="text-xs font-semibold">{day}</span>
+								<span className="text-lg font-bold">{dayNum}</span>
+							</button>
+						)
+					})}
 				</div>
 
-				{/* Calendar Grid */}
-				<div className="grid grid-cols-7 gap-1">
-					{["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((day) => (
-						<div key={day} className="text-center text-xs font-semibold text-muted-foreground py-1">
-							{day}
-						</div>
-					))}
-					{days.map((day, idx) => (
-						<button
-							key={idx}
-							onClick={() => day && handleDateClick(day)}
-							disabled={!day}
-							type="button"
-							className={`
-								aspect-square rounded-lg text-sm font-medium transition-colors flex items-center justify-center
-								${!day ? "opacity-0" : ""}
-								${isSelected(day) ? "bg-primary text-primary-foreground" : isToday(day) ? "bg-primary/10 text-primary" : "hover:bg-muted"}
-							`}
-						>
-							{day}
-						</button>
-					))}
-				</div>
+				{/* Bouton suivant */}
+				<button
+					onClick={handleNext}
+					className="p-1.5 hover:bg-muted rounded-lg transition-colors shrink-0"
+					type="button"
+				>
+					<ChevronRight className="h-4 w-4" />
+				</button>
 			</div>
 		</div>
 	)
