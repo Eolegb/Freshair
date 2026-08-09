@@ -75,10 +75,20 @@ export function DateScroller({ onDateChange }: DateScrollerProps) {
 	}
 
 	const handleDateClick = useCallback((date: Date) => {
-		setSelectedDate(startOfDay(date))
+		const day = startOfDay(date)
+		setSelectedDate(day)
+		// Keep the month title in sync if the tapped day belongs to a
+		// different month than the current anchor (e.g. tapping one of the
+		// last-week-of-next-month days visible at the edge of the strip).
+		setAnchorDate((prev) =>
+			prev.getMonth() === day.getMonth() &&
+			prev.getFullYear() === day.getFullYear()
+				? prev
+				: day
+		)
 	}, [])
 
-	const monthLabel = format(selectedDate, "LLLL yyyy", { locale: fr })
+	const monthLabel = format(anchorDate, "LLLL yyyy", { locale: fr })
 	const dayLabels: Record<number, string> = {
 		0: "di",
 		1: "lu",
@@ -101,7 +111,7 @@ export function DateScroller({ onDateChange }: DateScrollerProps) {
 				>
 					<ChevronLeft className="h-5 w-5" />
 				</button>
-				<h3 className="font-semibold text-base capitalize text-primary">
+				<h3 className="text-xs text-muted-foreground capitalize">
 					{monthLabel}
 				</h3>
 				<button
