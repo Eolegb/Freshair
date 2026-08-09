@@ -3,7 +3,6 @@ import { getListing, incrementPropertyViews } from "@/lib/properties"
 import { Gallery } from "../../_components/Gallery"
 import { ListingHeader } from "../../_components/ListingHeader"
 import { LocationSection } from "../../_components/Location"
-import { Navbar } from "../../_components/Navbar"
 import { PropertyInfoCard } from "../../_components/PropertyInfoCard"
 
 type Params = Promise<{ id: string }>
@@ -16,10 +15,11 @@ export default async function ListingPage({ params }: { params: Params }) {
 	if (!listing) {
 		return (
 			<div className="min-h-screen flex flex-col">
-				<Navbar />
 				<main className="flex-1 container mx-auto px-4 flex items-center justify-center">
 					<div className="text-center">
-						<h1 className="text-2xl font-semibold mb-4">Logement introuvable</h1>
+						<h1 className="text-2xl font-semibold mb-4">
+							Logement introuvable
+						</h1>
 						<p className="text-gray-600">
 							Ce logement n'existe pas ou a été supprimé.
 						</p>
@@ -30,14 +30,14 @@ export default async function ListingPage({ params }: { params: Params }) {
 	}
 
 	const allImages = listing.data.gallery.rooms.flatMap((room) => room.images)
-	const address = listing.data.location?.address || listing.data.location?.subtitle || null
+	const address =
+		listing.data.location?.address || listing.data.location?.subtitle || null
 	const locationTitle = listing.data.location?.title || ""
 	const lat = listing.data.location?.coordinates?.lat ?? 48.1173
 	const lng = listing.data.location?.coordinates?.lng ?? -1.6778
 
 	return (
 		<div>
-			<Navbar />
 			<main className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-40 pb-20 md:pb-10">
 				<h1 className="text-2xl font-semibold pt-6">{listing.data.h1Title}</h1>
 				<Gallery
