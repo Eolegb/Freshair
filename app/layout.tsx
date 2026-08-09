@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { ClerkProvider } from "@clerk/nextjs"
 import type { Metadata, Viewport } from "next"
 import { BottomNav } from "./_components/BottomNav"
-import Link from "next/link"
+import { Header } from "./_components/Header"
 import "./globals.css"
 
 export const viewport: Viewport = {
@@ -44,14 +44,8 @@ export default function RootLayout({
 					<link rel="manifest" href="/manifest.json" />
 				</head>
 				<body className="pb-16">
-					<header className="fixed top-0 left-0 right-0 z-50 h-12 flex items-center justify-center bg-background/95 backdrop-blur border-b safe-area-top">
-						<Link href="/explore" className="text-lg font-bold tracking-tight text-primary">
-							Freshair
-						</Link>
-					</header>
-					<div className="pt-12">
-						{children}
-					</div>
+					<Header />
+					<div className="pt-12">{children}</div>
 					<BottomNav />
 					<Toaster />
 				</body>
