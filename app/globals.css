@@ -86,6 +86,8 @@
 
 .scrollbar-hide::-webkit-scrollbar {
 	display: none;
+}.scrollbar-hide::-webkit-scrollbar {
+	display: none;
 }
 	.dark {
 		--background: 224 71.4% 4.1%;
