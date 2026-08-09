@@ -5,7 +5,6 @@ import {
 	integer,
 	json,
 	pgTable,
-	primaryKey,
 	text,
 	timestamp,
 	uniqueIndex
@@ -59,13 +58,18 @@ export const scrapingJobs = pgTable(
 export const cleaningSchedule = pgTable(
 	"cleaning_schedule",
 	{
+		id: text("id").primaryKey(),
 		date: date("date").notNull(),
 		propertyId: text("property_id")
 			.references(() => properties.id, { onDelete: "cascade" })
-			.notNull()
+			.notNull(),
+		createdAt: timestamp("created_at").notNull().defaultNow()
 	},
 	(table) => ({
-		pk: primaryKey({ columns: [table.date, table.propertyId] })
+		dateIdx: index("cleaning_schedule_date_idx").on(table.date),
+		datePropertyUnique: uniqueIndex(
+			"cleaning_schedule_date_property_unique"
+		).on(table.date, table.propertyId)
 	})
 )
 
@@ -75,3 +79,4 @@ export type NewProperty = typeof properties.$inferInsert
 export type ScrapingJob = typeof scrapingJobs.$inferSelect
 export type NewScrapingJob = typeof scrapingJobs.$inferInsert
 export type CleaningSchedule = typeof cleaningSchedule.$inferSelect
+export type NewCleaningSchedule = typeof cleaningSchedule.$inferInsert
