@@ -5,10 +5,11 @@ set -euo pipefail
 
 APP=freshair-app
 PORT=3001
-# IP du tailnet : seule adresse qui rend l'appli joignable depuis l'iPhone sans
-# l'exposer aux voisins du Wi-Fi mutualise.
-BIND=$(tailscale ip -4 2>/dev/null | head -1)
-[ -z "$BIND" ] && BIND=100.66.141.62
+# L'appli ecoute sur la boucle locale : c'est Tailscale serve/funnel qui la rend
+# joignable (en HTTPS), depuis le tailnet comme depuis l'exterieur. Ecouter sur
+# 0.0.0.0 l'aurait exposee aux voisins du Wi-Fi : le reseau est partage, sans
+# pare-feu.
+BIND=127.0.0.1
 cd "$(dirname "$(readlink -f "$0")")"
 
 log() { printf '%s  %s\n' "$(date -Is)" "$*"; }

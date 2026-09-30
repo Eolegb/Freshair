@@ -8,9 +8,9 @@ export const dynamic = "force-dynamic"
 export default async function LoginPage({
 	searchParams
 }: {
-	searchParams: Promise<{ erreur?: string; suite?: string }>
+	searchParams: Promise<{ erreur?: string; suite?: string; bloque?: string }>
 }) {
-	const { erreur, suite } = await searchParams
+	const { erreur, suite, bloque: minutes } = await searchParams
 
 	// Deja connecte : inutile de redemander le mot de passe.
 	const dejaLa = (await cookies()).get("freshair_session")?.value
@@ -49,6 +49,11 @@ export default async function LoginPage({
 				{erreur ? (
 					<p className="mt-4 text-center text-sm text-destructive">
 						Mot de passe incorrect.
+					</p>
+				) : null}
+				{minutes ? (
+					<p className="mt-4 text-center text-sm text-destructive">
+						Trop de tentatives. Reessayez dans {minutes} minute{minutes === "1" ? "" : "s"}.
 					</p>
 				) : null}
 			</div>

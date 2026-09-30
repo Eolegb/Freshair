@@ -53,3 +53,53 @@ export function destinationSure(suite: unknown, defaut = "/today"): string {
 	const s = typeof suite === "string" ? suite : ""
 	return s.startsWith("/") && !s.startsWith("//") ? s : defaut
 }
+
+// ---------------------------------------------------------------------------
+// Limitation des tentatives de connexion.
+//
+// Des que l'appli est joignable publiquement, un mot de passe unique devient
+// cassable par force brute : il suffit d'essayer en boucle. On compte donc les
+// echecs par adresse et on ferme temporairement la porte.
+//
+// En memoire du processus : le conteneur est unique, et une remise a zero au
+// redemarrage n'est pas un probleme (un attaquant ne peut pas redemarrer le
+// serveur).
+const TENTATIVES_MAX = 5
+const BLOCAGE_MS = 10 * 60 * 1000
+const echecs = new Map<string, { compte: number; jusqua: number }>()
+
+export function bloque(adresse: string): number {
+	const e = echecs.get(adresse)
+	if (!e) return 0
+	const reste = e.jusqua - Date.now()
+	if (reste <= 0) {
+		echecs.delete(adresse)
+		return 0
+	}
+	return Math.ceil(reste / 60000)
+}
+
+export function noterEchec(adresse: string): void {
+	const e = echecs.get(adresse) || { compte: 0, jusqua: 0 }
+	e.compte += 1
+	if (e.compte >= TENTATIVES_MAX) {
+		e.jusqua = Date.now() + BLOCAGE_MS
+		e.compte = 0
+	}
+	echecs.set(adresse, e)
+	// Menage : sans ca la table grossit indefiniment sur une appli exposee.
+	if (echecs.size > 500) {
+		const maintenant = Date.now()
+		for (const [k, v] of echecs) if (v.jusqua < maintenant) echecs.delete(k)
+	}
+}
+
+export function oublierEchecs(adresse: string): void {
+	echecs.delete(adresse)
+}
+
+// Derriere Tailscale serve/funnel, l'adresse reelle arrive dans x-forwarded-for.
+export function adresseClient(req: Request): string {
+	const entete = req.headers.get("x-forwarded-for") || ""
+	return entete.split(",")[0].trim() || req.headers.get("x-real-ip") || "inconnue"
+}
