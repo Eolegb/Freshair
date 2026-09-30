@@ -1,4 +1,5 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto"
+import { readFileSync, renameSync, writeFileSync } from "node:fs"
 
 // Logique de session partagee entre le middleware et la route de connexion.
 // Elle vit ici et non dans middleware.ts : Next ne l'expose pas comme module
@@ -61,47 +62,71 @@ export function destinationSure(suite: unknown, defaut = "/today"): string {
 // cassable par force brute : il suffit d'essayer en boucle. On compte donc les
 // echecs par adresse et on ferme temporairement la porte.
 //
-// En memoire du processus : le conteneur est unique, et une remise a zero au
-// redemarrage n'est pas un probleme (un attaquant ne peut pas redemarrer le
-// serveur).
+// L'etat vit dans un FICHIER, pas dans une variable de module : Next 16
+// reinstancie le module a chaque requete, donc une Map en memoire repart de zero
+// a chaque essai et ne bloque jamais rien. Verifie : « table=1 » a chaque appel.
+// Une variable de module n'est pas un stockage partage ici.
 const TENTATIVES_MAX = 5
 const BLOCAGE_MS = 10 * 60 * 1000
-const echecs = new Map<string, { compte: number; jusqua: number }>()
+const FICHIER_ECHECS = "/tmp/freshair-echecs.json"
+
+type Etat = Record<string, { compte: number; jusqua: number }>
+
+function lireEtat(): Etat {
+	try {
+		return JSON.parse(readFileSync(FICHIER_ECHECS, "utf8")) as Etat
+	} catch {
+		return {}
+	}
+}
+
+function ecrireEtat(e: Etat): void {
+	try {
+		// Ecriture par fichier temporaire + renommage : un lecteur concurrent ne
+		// tombe jamais sur un fichier a moitie ecrit.
+		const temporaire = `${FICHIER_ECHECS}.tmp`
+		writeFileSync(temporaire, JSON.stringify(e))
+		renameSync(temporaire, FICHIER_ECHECS)
+	} catch (erreur) {
+		// Si l'etat ne peut pas etre ecrit, la protection est inoperante : le
+		// dire, sinon elle semble en place sans rien bloquer.
+		console.error("[connexion] etat des echecs NON ENREGISTRE", erreur)
+	}
+}
 
 export function bloque(adresse: string): number {
-	const e = echecs.get(adresse)
+	const e = lireEtat()[adresse]
 	if (!e) return 0
 	const reste = e.jusqua - Date.now()
-	if (reste <= 0) {
-		echecs.delete(adresse)
-		return 0
-	}
+	if (reste <= 0) return 0
 	return Math.ceil(reste / 60000)
 }
 
 export function noterEchec(adresse: string): void {
-	const e = echecs.get(adresse) || { compte: 0, jusqua: 0 }
+	const etat = lireEtat()
+	// Menage au passage : la table ne doit pas grossir indefiniment sur une
+	// appli exposee.
+	const maintenant = Date.now()
+	for (const [k, v] of Object.entries(etat)) if (v.jusqua < maintenant && v.jusqua > 0) delete etat[k]
+
+	const e = etat[adresse] || { compte: 0, jusqua: 0 }
 	e.compte += 1
 	if (e.compte >= TENTATIVES_MAX) {
 		e.jusqua = Date.now() + BLOCAGE_MS
 		e.compte = 0
 	}
-	echecs.set(adresse, e)
-	// Trace : sans elle, un compteur qui ne monte pas passe inapercu et la
-	// protection semble en place alors qu'elle ne bloque rien.
+	etat[adresse] = e
+	ecrireEtat(etat)
 	console.log(
-		`[connexion] echec depuis ${adresse} : ${e.compte} echec(s), table=${echecs.size}` +
-			(e.jusqua > Date.now() ? `, verrou pose ${e.jusqua}` : "")
+		`[connexion] echec depuis ${adresse} : ${e.compte} echec(s), entrees=${Object.keys(etat).length}` +
+			(e.jusqua > maintenant ? ", verrou pose" : "")
 	)
-	// Menage : sans ca la table grossit indefiniment sur une appli exposee.
-	if (echecs.size > 500) {
-		const maintenant = Date.now()
-		for (const [k, v] of echecs) if (v.jusqua < maintenant) echecs.delete(k)
-	}
 }
 
 export function oublierEchecs(adresse: string): void {
-	echecs.delete(adresse)
+	const etat = lireEtat()
+	delete etat[adresse]
+	ecrireEtat(etat)
 }
 
 // Adresse publique telle que la voit le client. Derriere Tailscale serve/funnel,
