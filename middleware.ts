@@ -2,15 +2,9 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
 
 const isProtected = createRouteMatcher(["/dashboard(.*)", "/api/nomad/today(.*)"])
 
-export default clerkMiddleware(
-	async (auth, req) => {
-		if (isProtected(req)) await auth.protect()
-	},
-	// `debug` fait journaliser a Clerk chaque decision d'authentification. Sans lui
-	// une requete suspendue ne laisse AUCUNE trace : le serveur accepte la connexion,
-	// ne repond jamais, et le journal reste vide.
-	{ debug: true }
-)
+export default clerkMiddleware(async (auth, req) => {
+	if (isProtected(req)) await auth.protect()
+})
 
 // Runtime Node explicite. Par defaut le middleware part sur le runtime Edge, ou
 // Clerk tourne dans un bac a sable : ici il s'y bloquait, et TOUTE requete passant
