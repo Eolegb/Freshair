@@ -5,6 +5,10 @@ set -euo pipefail
 
 APP=freshair-app
 PORT=3001
+# IP du tailnet : seule adresse qui rend l'appli joignable depuis l'iPhone sans
+# l'exposer aux voisins du Wi-Fi mutualise.
+BIND=$(tailscale ip -4 2>/dev/null | head -1)
+[ -z "$BIND" ] && BIND=100.66.141.62
 cd "$(dirname "$(readlink -f "$0")")"
 
 log() { printf '%s  %s\n' "$(date -Is)" "$*"; }
@@ -31,7 +35,7 @@ apres=$(git rev-parse HEAD)
 # repasse par un instant ou il se declare en marche, et le script concluait « tout
 # va bien » en laissant la panne en place. La seule preuve est une reponse HTTP.
 if [ "$avant" = "$apres" ] && [ -z "${FORCE:-}" ]; then
-	code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "http://127.0.0.1:$PORT/" || true)
+	code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "http://$BIND:$PORT/" || true)
 	if [ -n "$code" ] && [ "$code" != "000" ]; then
 		exit 0
 	fi
@@ -57,15 +61,18 @@ sg docker -c "docker build -t $APP:latest \
 # a l'arret parce qu'un build a echoue.
 sg docker -c "docker rm -f $APP" >/dev/null 2>&1 || true
 # -e PORT : sans lui le serveur autonome ecoute sur 3000, deja pris par axiome, et
-# le conteneur redemarre en boucle sur EADDRINUSE. -e HOSTNAME : loopback
-# uniquement, le Wi-Fi est mutualise et sans pare-feu.
+# le conteneur redemarre en boucle sur EADDRINUSE.
+# -e HOSTNAME : l'IP TAILSCALE, pas 0.0.0.0 et pas 127.0.0.1. 0.0.0.0 exposerait
+# l'appli aux voisins du Wi-Fi mutualise, qui est sans pare-feu ; 127.0.0.1 la
+# rendrait injoignable depuis l'iPhone. L'IP Tailscale est joignable par les
+# appareils du tailnet et par personne d'autre.
 sg docker -c "docker run -d --name $APP --restart unless-stopped --network host \
-	-e PORT=$PORT -e HOSTNAME=127.0.0.1 \
+	-e PORT=$PORT -e HOSTNAME=$BIND \
 	--env-file .env.container $APP:latest" >/dev/null
 
 # Verification par une vraie reponse HTTP, pas par un drapeau d'etat.
 for i in $(seq 1 30); do
-	code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 3 "http://127.0.0.1:$PORT/" || true)
+	code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 3 "http://$BIND:$PORT/" || true)
 	if [ -n "$code" ] && [ "$code" != "000" ]; then
 		log "service en ligne sur le port $PORT (reponse $code apres ${i}s)"
 		exit 0
