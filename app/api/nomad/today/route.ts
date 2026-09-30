@@ -1,11 +1,14 @@
-import postgres from "postgres"
 import { NextResponse } from "next/server"
+import postgres from "postgres"
 
 const AUTH_TOKEN = "nomad-api-secret-2026"
 
-// Un seul client pour tout le processus. L'ancienne version appelait `postgres(url)`
-// a chaque requete sans jamais fermer le client : une piscine de connexions neuve
-// par appel, qui s'accumulait jusqu'a saturation.
+// AAAA-MM-JJ, format produit par le client.
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
+
+// UN SEUL client pour tout le processus. L'ancienne version appelait
+// `postgres(url)` a chaque requete sans jamais fermer : une piscine de connexions
+// neuve par appel, qui s'accumulait jusqu'a saturation.
 let client: ReturnType<typeof postgres> | null = null
 function getSql() {
 	if (!client) {
@@ -16,23 +19,19 @@ function getSql() {
 	return client
 }
 
-function dateValide(d: unknown): d is string {
-	return typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)
-}
-
 // GET /api/nomad/today?date=2026-07-28
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url)
-	if (searchParams.get("token") !== AUTH_TOKEN) {
+	if (searchParams.get("token") !== AUTH_TOKEN)
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-	}
 
-	const demande = searchParams.get("date")
-	const date = dateValide(demande)
-		? demande
-		: new Intl.DateTimeFormat("fr-CA", { timeZone: "Europe/Paris" }).format(new Date())
+	const date =
+		searchParams.get("date") || new Date().toISOString().split("T")[0]
+	if (!DATE_RE.test(date))
+		return NextResponse.json({ error: "Invalid date" }, { status: 400 })
 
 	const sql = getSql()
+
 	const rows = await sql`
     SELECT p.id, (p.listing_data::json->'data'->>'h1Title') as title, p.cleaning_price
     FROM cleaning_schedule cs
@@ -45,68 +44,91 @@ export async function GET(request: Request) {
 }
 
 // POST /api/nomad/today
+// Body: { token, date: "YYYY-MM-DD", property_ids: string[] }
+// Aligne le planning du jour sur property_ids — ajoute ce qui manque, retire ce
+// qui n'est plus selectionne — au lieu de vider la journee puis de tout reinserer,
+// pour que deux enregistrements simultanes ne puissent pas s'effacer mutuellement.
 export async function POST(request: Request) {
-	let body: any
+	let body: unknown
 	try {
 		body = await request.json()
 	} catch {
-		return NextResponse.json({ error: "JSON invalide" }, { status: 400 })
+		return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 })
 	}
 
-	if (body?.token !== AUTH_TOKEN) {
+	if (typeof body !== "object" || body === null) {
+		return NextResponse.json({ error: "Invalid body" }, { status: 400 })
+	}
+
+	const { token, date, property_ids } = body as Record<string, unknown>
+
+	if (token !== AUTH_TOKEN)
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+	if (typeof date !== "string" || !DATE_RE.test(date)) {
+		return NextResponse.json(
+			{ error: "Invalid or missing date" },
+			{ status: 400 }
+		)
 	}
-	if (!dateValide(body?.date)) {
-		return NextResponse.json({ error: "date attendue au format AAAA-MM-JJ" }, { status: 400 })
-	}
-	if (!Array.isArray(body?.property_ids) || body.property_ids.some((i: unknown) => typeof i !== "string")) {
-		return NextResponse.json({ error: "property_ids attendu comme liste d'identifiants" }, { status: 400 })
+	if (
+		!Array.isArray(property_ids) ||
+		!property_ids.every((id) => typeof id === "string")
+	) {
+		return NextResponse.json(
+			{ error: "property_ids must be an array of strings" },
+			{ status: 400 }
+		)
 	}
 
-	const date: string = body.date
-	const ids: string[] = Array.from(new Set(body.property_ids))
+	// Dedoublonnage defensif : l'index unique rejetterait un lot contenant deux
+	// fois le meme identifiant.
+	const ids = Array.from(new Set(property_ids))
 
 	const sql = getSql()
-
-	// En UNE transaction. L'ancienne version supprimait la journee puis inserait
-	// identifiant par identifiant : le moindre echec en cours de boucle laissait la
-	// journee videe et rien dedans. Perte seche, et l'API renvoyait 500 sans que
-	// l'appli le montre.
 	let ignores: string[] = []
-	await sql.begin(async (tx) => {
-		await tx`DELETE FROM cleaning_schedule WHERE date = ${date}::date`
 
+	await sql.begin(async (tx) => {
+		// On ne travaille que sur des identifiants qui existent reellement.
+		// Un identifiant perime garde dans le navigateur faisait echouer la cle
+		// etrangere et annulait l'enregistrement de toute la journee.
+		let valides: string[] = []
 		if (ids.length > 0) {
-			// On n'insere que les identifiants qui existent reellement. Un identifiant
-			// perime garde dans le navigateur faisait echouer la cle etrangere et
-			// annulait l'enregistrement de TOUTE la journee.
 			const existants = await tx`
         SELECT id FROM properties WHERE id = ANY(${ids}::text[])
       `
-			const valides = existants.map((r: any) => r.id as string)
+			valides = existants.map((r) => r.id as string)
 			ignores = ids.filter((i) => !valides.includes(i))
+		}
 
-			if (valides.length > 0) {
-				await tx`
-          INSERT INTO cleaning_schedule (date, property_id)
-          SELECT ${date}::date, unnest(${valides}::text[])
-          ON CONFLICT DO NOTHING
-        `
-			}
+		if (valides.length > 0) {
+			// PAS de colonne `id` ici : elle est de type entier avec une sequence
+			// (nextval). L'ancienne version y ecrivait un crypto.randomUUID() — une
+			// chaine dans une colonne entiere — donc CHAQUE enregistrement echouait.
+			const values = valides.map((propertyId) => ({ date, propertyId }))
+			await tx`
+        INSERT INTO cleaning_schedule ${tx(values, "date", "propertyId")}
+        ON CONFLICT (date, property_id) DO NOTHING
+      `
+			await tx`
+        DELETE FROM cleaning_schedule
+        WHERE date = ${date}::date
+          AND property_id NOT IN ${tx(valides)}
+      `
+		} else {
+			await tx`DELETE FROM cleaning_schedule WHERE date = ${date}::date`
 		}
 	})
 
 	// Relu depuis la base : on ne renvoie pas ce qu'on croit avoir ecrit, mais ce
-	// qui y est. C'est ce que l'appli affichera.
+	// qui y est reellement — c'est ce que l'appli affichera.
 	const enregistres = await sql`
     SELECT property_id FROM cleaning_schedule WHERE date = ${date}::date
   `
 
 	return NextResponse.json({
 		ok: true,
-		date,
 		count: enregistres.length,
-		property_ids: enregistres.map((r: any) => r.property_id),
+		property_ids: enregistres.map((r) => r.property_id as string),
 		ignores
 	})
 }

@@ -15,6 +15,7 @@ import { AlertCircle, Bus, Check, Key, Loader2, MapPin, Navigation, Plus, Search
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { DateScroller } from "./DateScroller"
 
 const TodayMap = dynamic(() => import("./TodayMap").then(m => ({ default: m.TodayMap })), {
 	ssr: false,
@@ -27,16 +28,16 @@ const API_TOKEN = "nomad-api-secret-2026"
 type CommonLine = { line: string; color: string; servedBy: number; terminus: string }
 type Statut = "idle" | "saving" | "saved" | "error"
 
-// La date du JOUR a Paris, pas en UTC. `toISOString()` renvoie la date UTC :
-// passe minuit a Paris on est encore la veille en UTC, et l'appli enregistrait
-// donc les prestations sur le mauvais jour. fr-CA produit directement AAAA-MM-JJ.
-function jourParis(): string {
+// Le jour choisi, en date LOCALE. `toISOString()` renvoie la date UTC : passe
+// minuit a Paris on est encore la veille en UTC, et les prestations etaient
+// enregistrees sur le mauvais jour. fr-CA produit directement AAAA-MM-JJ.
+function jourLocal(d: Date): string {
 	return new Intl.DateTimeFormat("fr-CA", {
 		timeZone: "Europe/Paris",
 		year: "numeric",
 		month: "2-digit",
 		day: "2-digit"
-	}).format(new Date())
+	}).format(d)
 }
 
 export function TodayClient({ properties }: { properties: TodayProperty[] }) {
@@ -46,56 +47,63 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 	const [commonLines, setCommonLines] = useState<CommonLine[]>([])
 	const [statut, setStatut] = useState<Statut>("idle")
 	const [loading, setLoading] = useState(true)
+	const [currentDate, setCurrentDate] = useState<Date>(new Date())
 	const initialized = useRef(false)
 
-	// Ecrit la selection du jour en base. Ne JAMAIS avaler l'erreur : c'etait la
-	// cause du bug principal — la selection s'affichait a l'ecran sans jamais
+	const dateStr = jourLocal(currentDate)
+	const dateStorageKey = `${STORAGE_KEY}_${dateStr}`
+
+	// Enregistre la selection du jour choisi. Ne JAMAIS avaler l'erreur : c'etait
+	// la cause du bug principal — la selection s'affichait a l'ecran sans jamais
 	// atteindre la base, et rien ne le signalait.
 	const saveToApi = useCallback(
-		async (ids: string[]) => {
+		async (ids: string[], date: string) => {
 			setStatut("saving")
 			try {
 				const res = await fetch("/api/nomad/today", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ token: API_TOKEN, date: jourParis(), property_ids: ids })
+					body: JSON.stringify({ token: API_TOKEN, date, property_ids: ids })
 				})
 				if (!res.ok) {
 					const detail = await res.text().catch(() => "")
 					throw new Error(`HTTP ${res.status}${detail ? " — " + detail.slice(0, 120) : ""}`)
 				}
+				const data = await res.json()
+				// On affiche ce que la BASE contient, pas ce qu'on a demande d'ecrire.
+				const reels: string[] = data.property_ids || []
+				setSelectedIds(reels)
+				localStorage.setItem(dateStorageKey, JSON.stringify(reels))
 				setStatut("saved")
+				if (data.ignores?.length) {
+					toast({
+						title: "Selection ajustee",
+						description: `${data.ignores.length} logement(s) n'existent plus et ont ete retires.`
+					})
+				}
 			} catch (e: any) {
 				setStatut("error")
 				toast({
 					variant: "destructive",
 					title: "Enregistrement impossible",
 					description:
-						"Tes prestations ne sont PAS enregistrees. " + (e?.message || "Verifie ta connexion et reessaie.")
+						"Les prestations ne sont PAS enregistrees. " + (e?.message || "Verifie ta connexion et reessaie.")
 				})
 			}
 		},
-		[toast]
+		[dateStorageKey, toast]
 	)
 
 	useEffect(() => {
-		const jour = jourParis()
+		const key = `${STORAGE_KEY}_${dateStr}`
 		let local: string[] = []
 		try {
-			const raw = localStorage.getItem(STORAGE_KEY)
-			if (raw) {
-				const parsed = JSON.parse(raw)
-				// Le format porte desormais la date : une selection d'hier ne doit pas
-				// etre presentee comme celle d'aujourd'hui.
-				if (parsed && !Array.isArray(parsed) && typeof parsed === "object" && parsed.date === jour) {
-					local = Array.isArray(parsed.ids) ? parsed.ids : []
-				} else if (Array.isArray(parsed)) {
-					local = parsed
-				}
-			}
+			const stored = localStorage.getItem(key)
+			if (stored) local = JSON.parse(stored)
 		} catch {}
 
-		fetch(`/api/nomad/today?date=${jour}&token=${API_TOKEN}`)
+		setLoading(true)
+		fetch(`/api/nomad/today?date=${dateStr}&token=${API_TOKEN}`)
 			.then(r => {
 				if (!r.ok) throw new Error(`HTTP ${r.status}`)
 				return r.json()
@@ -103,11 +111,11 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 			.then(data => {
 				// La base fait foi, y compris quand elle dit « vide » : l'ancien code
 				// ne remplacait la selection que si la reponse etait non vide, si bien
-				// qu'une selection supprimee ailleurs restait affichee indefiniment.
+				// qu'une journee videe ailleurs restait affichee comme pleine.
 				const ids = (data.prestations || []).map((p: any) => p.id)
 				setSelectedIds(ids)
 				setStatut("saved")
-				localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: jour, ids }))
+				localStorage.setItem(key, JSON.stringify(ids))
 			})
 			.catch(() => {
 				setSelectedIds(local)
@@ -122,17 +130,17 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 				setLoading(false)
 				initialized.current = true
 			})
-	}, [toast])
+	}, [dateStr, toast])
 
 	const saveSelection = useCallback(
 		(ids: string[]) => {
 			setSelectedIds(ids)
-			localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: jourParis(), ids }))
+			localStorage.setItem(dateStorageKey, JSON.stringify(ids))
 			if (initialized.current) {
-				saveToApi(ids)
+				saveToApi(ids, dateStr)
 			}
 		},
-		[saveToApi]
+		[dateStr, dateStorageKey, saveToApi]
 	)
 
 	const toggleProperty = useCallback(
@@ -163,10 +171,11 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 	})
 
 	return (
-		// overflow-hidden + 100dvh : la page ne defile plus elle-meme, une seule zone
-		// defile (la liste). Avant, le document defilait ET la liste defilait : le
-		// bandeau venait recouvrir les prestations au lieu de les pousser.
+		// overflow-hidden et hauteur bornee : la page ne defile plus elle-meme, une
+		// seule zone defile — la liste. Avant, le document defilait ET la liste
+		// defilait, et le bandeau venait recouvrir les prestations.
 		<div className="flex flex-col overflow-hidden" style={{ height: "calc(100dvh - 48px - 64px)" }}>
+			<DateScroller onDateChange={setCurrentDate} />
 			<TodayMap selected={selected} />
 
 			{/* shrink-0 : ces barres ne doivent jamais etre comprimees par le flex,
@@ -174,9 +183,9 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 			<div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
 				<div className="min-w-0">
 					<h2 className="font-semibold text-sm">
-						{selected.length} logement{selected.length > 1 ? "s" : ""} aujourd'hui
+						{selected.length} logement{selected.length > 1 ? "s" : ""} - Planning
 					</h2>
-					<StatutLigne statut={statut} onRetry={() => saveToApi(selectedIds)} />
+					<StatutLigne statut={statut} onRetry={() => saveToApi(selectedIds, dateStr)} />
 				</div>
 				<Sheet>
 					<SheetTrigger asChild>
@@ -187,7 +196,7 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 					</SheetTrigger>
 					<SheetContent side="bottom" className="h-[80vh]">
 						<SheetHeader className="mb-4">
-							<SheetTitle>Selectionner les logements du jour</SheetTitle>
+							<SheetTitle>Sélectionner les logements du jour</SheetTitle>
 						</SheetHeader>
 						<div className="relative mb-4">
 							<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -217,7 +226,7 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 			{commonLines.length > 0 && (
 				// shrink-0 et hauteur bornee : ce bloc ne doit jamais pousser la liste
 				// hors de l'ecran. Long, il defile lui-meme.
-				<div className="px-4 py-3 border-b bg-blue-50/50 shrink-0 max-h-[28dvh] overflow-y-auto">
+				<div className="px-4 py-3 border-b bg-blue-50/50 shrink-0 max-h-[24dvh] overflow-y-auto">
 					<div className="flex items-center gap-2 mb-2">
 						<Bus className="h-4 w-4 text-blue-600" />
 						<span className="text-xs font-semibold text-blue-800 uppercase tracking-wider">Lignes en commun</span>
@@ -242,7 +251,7 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 					<div className="flex flex-col items-center justify-center h-full text-center px-4">
 						<MapPin className="h-12 w-12 text-muted-foreground/30 mb-4" />
 						<p className="text-muted-foreground text-sm">
-							Appuie sur "Ajouter" pour selectionner les logements du jour
+							{loading ? "Chargement..." : "Appuie sur \"Ajouter\" pour sélectionner les logements de ce jour"}
 						</p>
 					</div>
 				) : (
@@ -284,8 +293,8 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 	)
 }
 
-// Rend l'etat d'enregistrement VISIBLE. Sans ca, une selection non enregistree
-// est indiscernable d'une selection enregistree — exactement le probleme signale.
+// Rend l'etat d'enregistrement VISIBLE. Sans ca une selection non enregistree est
+// indiscernable d'une selection enregistree — exactement le probleme signale.
 function StatutLigne({ statut, onRetry }: { statut: Statut; onRetry: () => void }) {
 	if (statut === "saving") {
 		return (

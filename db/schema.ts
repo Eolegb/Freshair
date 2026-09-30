@@ -5,15 +5,17 @@ import {
 	integer,
 	json,
 	pgTable,
-	primaryKey,
 	text,
-	timestamp
+	timestamp,
+	uniqueIndex
 } from "drizzle-orm/pg-core"
 
-// ATTENTION : ce fichier decrit la base REELLE (Supabase), pas une intention.
-// `cleaning_schedule` porte un `id` auto-incremente en plus de sa cle unique
-// (date, property_id), et `today_selections` existait en base sans figurer ici.
-// Un schema qui ment fait echouer les migrations en silence.
+// ATTENTION : ce fichier decrit la base REELLE, pas une intention.
+// `cleaning_schedule.id` est un ENTIER avec une sequence (nextval), pas un texte.
+// Le declarer en `text` avait conduit a y inserer un crypto.randomUUID() : chaque
+// enregistrement de prestation echouait. Verifier en base avant de toucher ici :
+//   select column_name, data_type, column_default from information_schema.columns
+//   where table_name='cleaning_schedule';
 
 export const properties = pgTable(
 	"properties",
@@ -25,11 +27,11 @@ export const properties = pgTable(
 		views: integer("views").notNull().default(0),
 		inquiries: integer("inquiries").notNull().default(0),
 		pricePerNight: integer("price_per_night").notNull().default(0),
-		createdAt: timestamp("created_at").notNull().defaultNow(),
+		cleaningPrice: integer("cleaning_price").notNull().default(0),
 		keyboxCode: text("keybox_code"),
 		driveUrl: text("drive_url"),
 		comment: text("comment"),
-		cleaningPrice: integer("cleaning_price").default(0)
+		createdAt: timestamp("created_at").notNull().defaultNow()
 	},
 	(table) => {
 		return {
@@ -63,6 +65,7 @@ export const scrapingJobs = pgTable(
 export const cleaningSchedule = pgTable(
 	"cleaning_schedule",
 	{
+		// Entier, sequence nextval : NE JAMAIS fournir cette colonne a l'insertion.
 		id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
 		date: date("date").notNull(),
 		propertyId: text("property_id")
@@ -71,7 +74,7 @@ export const cleaningSchedule = pgTable(
 		createdAt: timestamp("created_at").defaultNow()
 	},
 	(table) => ({
-		datePropertyIdx: index("cleaning_schedule_date_property_id_key").on(
+		datePropertyUnique: uniqueIndex("cleaning_schedule_date_property_id_key").on(
 			table.date,
 			table.propertyId
 		)
@@ -88,7 +91,7 @@ export const todaySelections = pgTable(
 		createdAt: timestamp("created_at").defaultNow()
 	},
 	(table) => ({
-		pk: primaryKey({ columns: [table.date, table.propertyId] })
+		datePropertyIdx: index("today_selections_date_idx").on(table.date)
 	})
 )
 
@@ -98,4 +101,5 @@ export type NewProperty = typeof properties.$inferInsert
 export type ScrapingJob = typeof scrapingJobs.$inferSelect
 export type NewScrapingJob = typeof scrapingJobs.$inferInsert
 export type CleaningSchedule = typeof cleaningSchedule.$inferSelect
+export type NewCleaningSchedule = typeof cleaningSchedule.$inferInsert
 export type TodaySelection = typeof todaySelections.$inferSelect
