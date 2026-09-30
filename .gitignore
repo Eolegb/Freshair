@@ -38,3 +38,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Secrets et etat local du deploiement
+.env.container
+deploy.log
+.deploy.lock

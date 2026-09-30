@@ -9,8 +9,9 @@ import {
 	SheetTitle,
 	SheetTrigger
 } from "@/components/ui/sheet"
+import { useToast } from "@/hooks/use-toast"
 import type { TodayProperty } from "@/lib/properties"
-import { Bus, Key, MapPin, Navigation, Plus, Search, X } from "lucide-react"
+import { AlertCircle, Bus, Check, Key, Loader2, MapPin, Navigation, Plus, Search, X } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -24,55 +25,115 @@ const STORAGE_KEY = "freshair_today"
 const API_TOKEN = "nomad-api-secret-2026"
 
 type CommonLine = { line: string; color: string; servedBy: number; terminus: string }
+type Statut = "idle" | "saving" | "saved" | "error"
 
-async function saveToApi(ids: string[]) {
-	const today = new Date().toISOString().split("T")[0]
-	try {
-		await fetch("/api/nomad/today", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ token: API_TOKEN, date: today, property_ids: ids })
-		})
-	} catch {}
+// La date du JOUR a Paris, pas en UTC. `toISOString()` renvoie la date UTC :
+// passe minuit a Paris on est encore la veille en UTC, et l'appli enregistrait
+// donc les prestations sur le mauvais jour. fr-CA produit directement AAAA-MM-JJ.
+function jourParis(): string {
+	return new Intl.DateTimeFormat("fr-CA", {
+		timeZone: "Europe/Paris",
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit"
+	}).format(new Date())
 }
 
 export function TodayClient({ properties }: { properties: TodayProperty[] }) {
+	const { toast } = useToast()
 	const [selectedIds, setSelectedIds] = useState<string[]>([])
 	const [searchQuery, setSearchQuery] = useState("")
 	const [commonLines, setCommonLines] = useState<CommonLine[]>([])
-	const [todayPrestations, setTodayPrestations] = useState<any[]>([])
+	const [statut, setStatut] = useState<Statut>("idle")
 	const [loading, setLoading] = useState(true)
 	const initialized = useRef(false)
 
-	useEffect(() => {
-		const today = new Date().toISOString().split("T")[0]
-		fetch(`/api/nomad/today?date=${today}&token=${API_TOKEN}`)
-			.then(r => r.json())
-			.then(data => {
-				if (data.prestations && data.prestations.length > 0) {
-					const ids = data.prestations.map((p: any) => p.id)
-					setSelectedIds(ids)
-					setTodayPrestations(data.prestations)
-					localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
+	// Ecrit la selection du jour en base. Ne JAMAIS avaler l'erreur : c'etait la
+	// cause du bug principal — la selection s'affichait a l'ecran sans jamais
+	// atteindre la base, et rien ne le signalait.
+	const saveToApi = useCallback(
+		async (ids: string[]) => {
+			setStatut("saving")
+			try {
+				const res = await fetch("/api/nomad/today", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ token: API_TOKEN, date: jourParis(), property_ids: ids })
+				})
+				if (!res.ok) {
+					const detail = await res.text().catch(() => "")
+					throw new Error(`HTTP ${res.status}${detail ? " — " + detail.slice(0, 120) : ""}`)
 				}
+				setStatut("saved")
+			} catch (e: any) {
+				setStatut("error")
+				toast({
+					variant: "destructive",
+					title: "Enregistrement impossible",
+					description:
+						"Tes prestations ne sont PAS enregistrees. " + (e?.message || "Verifie ta connexion et reessaie.")
+				})
+			}
+		},
+		[toast]
+	)
+
+	useEffect(() => {
+		const jour = jourParis()
+		let local: string[] = []
+		try {
+			const raw = localStorage.getItem(STORAGE_KEY)
+			if (raw) {
+				const parsed = JSON.parse(raw)
+				// Le format porte desormais la date : une selection d'hier ne doit pas
+				// etre presentee comme celle d'aujourd'hui.
+				if (parsed && !Array.isArray(parsed) && typeof parsed === "object" && parsed.date === jour) {
+					local = Array.isArray(parsed.ids) ? parsed.ids : []
+				} else if (Array.isArray(parsed)) {
+					local = parsed
+				}
+			}
+		} catch {}
+
+		fetch(`/api/nomad/today?date=${jour}&token=${API_TOKEN}`)
+			.then(r => {
+				if (!r.ok) throw new Error(`HTTP ${r.status}`)
+				return r.json()
+			})
+			.then(data => {
+				// La base fait foi, y compris quand elle dit « vide » : l'ancien code
+				// ne remplacait la selection que si la reponse etait non vide, si bien
+				// qu'une selection supprimee ailleurs restait affichee indefiniment.
+				const ids = (data.prestations || []).map((p: any) => p.id)
+				setSelectedIds(ids)
+				setStatut("saved")
+				localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: jour, ids }))
 			})
 			.catch(() => {
-				const stored = localStorage.getItem(STORAGE_KEY)
-				if (stored) { try { setSelectedIds(JSON.parse(stored)) } catch {} }
+				setSelectedIds(local)
+				setStatut("error")
+				toast({
+					variant: "destructive",
+					title: "Base injoignable",
+					description: "Derniere selection connue affichee. Les modifications ne seront pas enregistrees."
+				})
 			})
 			.finally(() => {
 				setLoading(false)
 				initialized.current = true
 			})
-	}, [])
+	}, [toast])
 
-	const saveSelection = useCallback((ids: string[]) => {
-		setSelectedIds(ids)
-		localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
-		if (initialized.current) {
-			saveToApi(ids)
-		}
-	}, [])
+	const saveSelection = useCallback(
+		(ids: string[]) => {
+			setSelectedIds(ids)
+			localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: jourParis(), ids }))
+			if (initialized.current) {
+				saveToApi(ids)
+			}
+		},
+		[saveToApi]
+	)
 
 	const toggleProperty = useCallback(
 		(id: string) => {
@@ -102,23 +163,31 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 	})
 
 	return (
-		<div className="flex flex-col" style={{ height: "calc(100vh - 48px - 64px)" }}>
+		// overflow-hidden + 100dvh : la page ne defile plus elle-meme, une seule zone
+		// defile (la liste). Avant, le document defilait ET la liste defilait : le
+		// bandeau venait recouvrir les prestations au lieu de les pousser.
+		<div className="flex flex-col overflow-hidden" style={{ height: "calc(100dvh - 48px - 64px)" }}>
 			<TodayMap selected={selected} />
 
-			<div className="flex items-center justify-between px-4 py-3 border-b">
-				<h2 className="font-semibold text-sm">
-					{selected.length} logement{selected.length > 1 ? "s" : ""} aujourd'hui
-				</h2>
+			{/* shrink-0 : ces barres ne doivent jamais etre comprimees par le flex,
+			    sinon c'est la liste qui perd la place. */}
+			<div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
+				<div className="min-w-0">
+					<h2 className="font-semibold text-sm">
+						{selected.length} logement{selected.length > 1 ? "s" : ""} aujourd'hui
+					</h2>
+					<StatutLigne statut={statut} onRetry={() => saveToApi(selectedIds)} />
+				</div>
 				<Sheet>
 					<SheetTrigger asChild>
-						<Button size="sm" className="gap-1 rounded-full">
+						<Button size="sm" className="gap-1 rounded-full shrink-0">
 							<Plus className="h-4 w-4" />
 							Ajouter
 						</Button>
 					</SheetTrigger>
 					<SheetContent side="bottom" className="h-[80vh]">
 						<SheetHeader className="mb-4">
-							<SheetTitle>Sélectionner les logements du jour</SheetTitle>
+							<SheetTitle>Selectionner les logements du jour</SheetTitle>
 						</SheetHeader>
 						<div className="relative mb-4">
 							<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -146,7 +215,9 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 			</div>
 
 			{commonLines.length > 0 && (
-				<div className="px-4 py-3 border-b bg-blue-50/50">
+				// shrink-0 et hauteur bornee : ce bloc ne doit jamais pousser la liste
+				// hors de l'ecran. Long, il defile lui-meme.
+				<div className="px-4 py-3 border-b bg-blue-50/50 shrink-0 max-h-[28dvh] overflow-y-auto">
 					<div className="flex items-center gap-2 mb-2">
 						<Bus className="h-4 w-4 text-blue-600" />
 						<span className="text-xs font-semibold text-blue-800 uppercase tracking-wider">Lignes en commun</span>
@@ -163,12 +234,15 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 				</div>
 			)}
 
-			<div className="flex-1 overflow-y-auto">
+			{/* min-h-0 est indispensable : sans lui un enfant flex scrollable refuse de
+			    retrecir et deborde au lieu de defiler. Cause directe des prestations
+			    invisibles sous le bandeau. */}
+			<div className="flex-1 min-h-0 overflow-y-auto">
 				{selected.length === 0 ? (
 					<div className="flex flex-col items-center justify-center h-full text-center px-4">
 						<MapPin className="h-12 w-12 text-muted-foreground/30 mb-4" />
 						<p className="text-muted-foreground text-sm">
-							Appuie sur "Ajouter" pour sélectionner les logements du jour
+							Appuie sur "Ajouter" pour selectionner les logements du jour
 						</p>
 					</div>
 				) : (
@@ -208,4 +282,31 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 			</div>
 		</div>
 	)
+}
+
+// Rend l'etat d'enregistrement VISIBLE. Sans ca, une selection non enregistree
+// est indiscernable d'une selection enregistree — exactement le probleme signale.
+function StatutLigne({ statut, onRetry }: { statut: Statut; onRetry: () => void }) {
+	if (statut === "saving") {
+		return (
+			<span className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
+				<Loader2 className="h-3 w-3 animate-spin" /> Enregistrement...
+			</span>
+		)
+	}
+	if (statut === "error") {
+		return (
+			<button type="button" onClick={onRetry} className="flex items-center gap-1 text-xs text-destructive mt-0.5 hover:underline">
+				<AlertCircle className="h-3 w-3" /> Non enregistre — appuie pour reessayer
+			</button>
+		)
+	}
+	if (statut === "saved") {
+		return (
+			<span className="flex items-center gap-1 text-xs text-emerald-600 mt-0.5">
+				<Check className="h-3 w-3" /> Enregistre
+			</span>
+		)
+	}
+	return <span className="text-xs text-muted-foreground mt-0.5">Chargement...</span>
 }

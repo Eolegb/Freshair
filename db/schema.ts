@@ -7,9 +7,13 @@ import {
 	pgTable,
 	primaryKey,
 	text,
-	timestamp,
-	uniqueIndex
+	timestamp
 } from "drizzle-orm/pg-core"
+
+// ATTENTION : ce fichier decrit la base REELLE (Supabase), pas une intention.
+// `cleaning_schedule` porte un `id` auto-incremente en plus de sa cle unique
+// (date, property_id), et `today_selections` existait en base sans figurer ici.
+// Un schema qui ment fait echouer les migrations en silence.
 
 export const properties = pgTable(
 	"properties",
@@ -21,11 +25,11 @@ export const properties = pgTable(
 		views: integer("views").notNull().default(0),
 		inquiries: integer("inquiries").notNull().default(0),
 		pricePerNight: integer("price_per_night").notNull().default(0),
-		cleaningPrice: integer("cleaning_price").notNull().default(0),
+		createdAt: timestamp("created_at").notNull().defaultNow(),
 		keyboxCode: text("keybox_code"),
 		driveUrl: text("drive_url"),
 		comment: text("comment"),
-		createdAt: timestamp("created_at").notNull().defaultNow()
+		cleaningPrice: integer("cleaning_price").default(0)
 	},
 	(table) => {
 		return {
@@ -59,10 +63,29 @@ export const scrapingJobs = pgTable(
 export const cleaningSchedule = pgTable(
 	"cleaning_schedule",
 	{
+		id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
 		date: date("date").notNull(),
 		propertyId: text("property_id")
 			.references(() => properties.id, { onDelete: "cascade" })
-			.notNull()
+			.notNull(),
+		createdAt: timestamp("created_at").defaultNow()
+	},
+	(table) => ({
+		datePropertyIdx: index("cleaning_schedule_date_property_id_key").on(
+			table.date,
+			table.propertyId
+		)
+	})
+)
+
+export const todaySelections = pgTable(
+	"today_selections",
+	{
+		date: date("date").notNull(),
+		propertyId: text("property_id")
+			.references(() => properties.id, { onDelete: "cascade" })
+			.notNull(),
+		createdAt: timestamp("created_at").defaultNow()
 	},
 	(table) => ({
 		pk: primaryKey({ columns: [table.date, table.propertyId] })
@@ -75,3 +98,4 @@ export type NewProperty = typeof properties.$inferInsert
 export type ScrapingJob = typeof scrapingJobs.$inferSelect
 export type NewScrapingJob = typeof scrapingJobs.$inferInsert
 export type CleaningSchedule = typeof cleaningSchedule.$inferSelect
+export type TodaySelection = typeof todaySelections.$inferSelect

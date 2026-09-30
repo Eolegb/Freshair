@@ -1,0 +1,19 @@
+node_modules
+.next
+.git
+.gitignore
+npm-debug.log*
+Dockerfile
+Dockerfile.*
+.dockerignore
+
+# Jamais de secrets dans l'image : les variables passent a l'execution par
+# --env-file, et les seules figees au build sont des NEXT_PUBLIC_* (publiques
+# par nature) transmises en --build-arg.
+.env
+.env.*
+!.env.example
+
+deploy.sh
+deploy.log
+README.md
