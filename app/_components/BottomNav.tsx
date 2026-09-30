@@ -13,10 +13,12 @@ export function BottomNav() {
 	]
 
 	return (
-		<nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 safe-area-bottom">
+		<nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 pb-[var(--nav-gap)]">
 			{/* h-[var(--nav-h)] : barre compacte (48px). Les items sont etires sur toute
 			    la hauteur (flex-1) : la zone tactile reste >= 44px malgre la hauteur
-			    reduite, et couvre toute la largeur de chaque onglet. */}
+			    reduite, et couvre toute la largeur de chaque onglet.
+			    pb-[var(--nav-gap)] : seule une marge residuelle (6px) separe les onglets
+			    du bord bas physique — et non plus la zone sure entiere (~34px). */}
 			<div className="flex h-[var(--nav-h)] items-stretch">
 				{tabs.map((tab) => {
 					const isActive =

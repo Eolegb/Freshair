@@ -41,7 +41,7 @@ export default function RootLayout({
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<link rel="manifest" href="/manifest.json" />
 			</head>
-			{/* pb = hauteur totale de la BottomNav (barre + zone sure) : rien ne passe sous la barre. */}
+			{/* pb = hauteur totale de la BottomNav (onglets + marge residuelle basse) : rien ne passe sous la barre. */}
 			<body className="pb-[var(--nav-total)]">
 				<Header />
 				<div className="pt-12">{children}</div>

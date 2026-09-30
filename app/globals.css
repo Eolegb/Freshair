@@ -35,11 +35,14 @@
 		--radius: 0.5rem;
 
 		/* Hauteurs des barres fixes. --header-h = h-12 du Header ; --nav-h = hauteur
-		   visible de la BottomNav ; --nav-total ajoute la zone sure iPhone pour que le
-		   contenu ne passe jamais sous la barre du bas (viewportFit: cover). */
+		   des onglets de la BottomNav ; --nav-gap = marge residuelle sous les onglets
+		   (6px : onglets quasi colles au bord bas, recouvrement partiel du
+		   home-indicator accepte) ; --nav-total = hauteur totale reellement occupee
+		   en bas, pour que le contenu ne passe jamais sous la barre (viewportFit: cover). */
 		--header-h: 48px;
 		--nav-h: 48px;
-		--nav-total: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+		--nav-gap: 6px;
+		--nav-total: calc(var(--nav-h) + var(--nav-gap));
 	}
 
 	.dark {
@@ -80,10 +83,6 @@
 	body {
 		@apply bg-background text-foreground;
 	}
-}
-
-.safe-area-bottom {
-	padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .scrollbar-hide {
