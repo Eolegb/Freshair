@@ -43,3 +43,7 @@ next-env.d.ts
 .env.container
 deploy.log
 .deploy.lock
+
+# Note dacces locale : contient le mot de passe, ne doit JAMAIS partir
+# sur GitHub. Un `git add -A` l avait emporte une fois.
+ACCES.txt
