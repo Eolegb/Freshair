@@ -8,7 +8,8 @@ import {
 	fabriquerCookie,
 	motDePasseCorrect,
 	noterEchec,
-	oublierEchecs
+	oublierEchecs,
+	originePublique
 } from "@/lib/session"
 
 // Echange le mot de passe contre le cookie de session, puis renvoie la personne
@@ -24,21 +25,26 @@ export async function POST(request: Request) {
 	// passe unique se casse par essais repetes.
 	const attente = bloque(adresse)
 	if (attente > 0) {
-		const trop = new URL("/login", request.url)
+		const trop = new URL("/login", originePublique(request))
 		trop.searchParams.set("bloque", String(attente))
 		return NextResponse.redirect(trop, { status: 303 })
 	}
 
 	if (!motDePasseCorrect(saisi)) {
 		noterEchec(adresse)
-		const echec = new URL("/login", request.url)
+		const echec = new URL("/login", originePublique(request))
 		echec.searchParams.set("erreur", "1")
 		if (destination !== "/today") echec.searchParams.set("suite", destination)
 		return NextResponse.redirect(echec, { status: 303 })
 	}
 
 	oublierEchecs(adresse)
-	const reponse = NextResponse.redirect(new URL(destination, request.url), { status: 303 })
+	// Redirection construite sur l'adresse PUBLIQUE : derriere le funnel,
+	// `request.url` vaut http://localhost:3001 et le navigateur suivrait vers une
+	// adresse injoignable.
+	const reponse = NextResponse.redirect(new URL(destination, originePublique(request)), {
+		status: 303
+	})
 	reponse.cookies.set(COOKIE_SESSION, fabriquerCookie(), {
 		httpOnly: true,
 		sameSite: "lax",

@@ -87,6 +87,12 @@ export function noterEchec(adresse: string): void {
 		e.compte = 0
 	}
 	echecs.set(adresse, e)
+	// Trace : sans elle, un compteur qui ne monte pas passe inapercu et la
+	// protection semble en place alors qu'elle ne bloque rien.
+	console.log(
+		`[connexion] echec depuis ${adresse} : ${e.compte} echec(s), table=${echecs.size}` +
+			(e.jusqua > Date.now() ? `, verrou pose ${e.jusqua}` : "")
+	)
 	// Menage : sans ca la table grossit indefiniment sur une appli exposee.
 	if (echecs.size > 500) {
 		const maintenant = Date.now()
@@ -96,6 +102,17 @@ export function noterEchec(adresse: string): void {
 
 export function oublierEchecs(adresse: string): void {
 	echecs.delete(adresse)
+}
+
+// Adresse publique telle que la voit le client. Derriere Tailscale serve/funnel,
+// `request.url` porte l'adresse d'ecoute (http://localhost:3001) : s'en servir
+// pour construire une redirection envoie le navigateur sur une adresse qui
+// n'existe pas chez lui. L'en-tete Host, lui, est celui de la requete d'origine.
+export function originePublique(req: Request): string {
+	const entetes = req.headers
+	const proto = (entetes.get("x-forwarded-proto") || "").split(",")[0].trim() || "http"
+	const hote = entetes.get("x-forwarded-host") || entetes.get("host") || "localhost"
+	return `${proto}://${hote}`
 }
 
 // Derriere Tailscale serve/funnel, l'adresse reelle arrive dans x-forwarded-for.
