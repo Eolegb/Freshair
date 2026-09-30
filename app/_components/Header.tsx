@@ -14,13 +14,16 @@ export function Header() {
 				Freshair
 			</Link>
 			<div className="flex items-center gap-3 w-8 justify-end">
-				<Link
+				{/* <a> et non <Link> : un <Link> est préchargé par Next au simple
+				    affichage de la page, ce qui déclenchait GET /api/logout et
+				    détruisait la session dès l'arrivée sur n'importe quel écran. */}
+				<a
 					href="/api/logout"
 					className="text-xs text-muted-foreground hover:text-foreground"
 					title="Se déconnecter"
 				>
 					Quitter
-				</Link>
+				</a>
 			</div>
 		</header>
 	)
