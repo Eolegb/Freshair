@@ -2,7 +2,10 @@
 # le serveur autonome produit par `output: "standalone"`.
 FROM node:22-slim AS deps
 WORKDIR /app
-COPY package.json package-lock.json ./
+# .npmrc porte `legacy-peer-deps=true`. Indispensable : le projet epingle react
+# en 19.0.0-rc-... et Clerk exige une 19.x stable — sans ce reglage npm refuse
+# l'installation avec ERESOLVE. Le fichier ne contient aucun secret.
+COPY package.json package-lock.json .npmrc ./
 # `npm install` et non `npm ci` : le lockfile de ce depot est incoherent avec
 # package.json, `npm ci` echoue net. A corriger un jour, pas pendant un deploiement.
 RUN npm install --no-audit --no-fund

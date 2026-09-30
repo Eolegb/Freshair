@@ -27,11 +27,15 @@ apres=$(git rev-parse HEAD)
 
 # Rien de neuf : ne pas reconstruire. Un build toutes les trois minutes pour rien
 # ferait tourner la machine en permanence, et un build consomme 1 a 2 Go.
+# `docker inspect .State.Running` ne suffit PAS : un conteneur qui plante en boucle
+# repasse par un instant ou il se declare en marche, et le script concluait « tout
+# va bien » en laissant la panne en place. La seule preuve est une reponse HTTP.
 if [ "$avant" = "$apres" ] && [ -z "${FORCE:-}" ]; then
-	if sg docker -c "docker inspect -f '{{.State.Running}}' $APP" 2>/dev/null | grep -q true; then
+	code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "http://127.0.0.1:$PORT/" || true)
+	if [ -n "$code" ] && [ "$code" != "000" ]; then
 		exit 0
 	fi
-	log "conteneur absent ou arrete : reconstruction"
+	log "aucune reponse sur le port $PORT : reconstruction"
 fi
 
 log "code ${apres:0:7}, construction de l'image"
@@ -52,13 +56,23 @@ sg docker -c "docker build -t $APP:latest \
 # Le conteneur n'est remplace qu'apres une construction reussie : jamais de site
 # a l'arret parce qu'un build a echoue.
 sg docker -c "docker rm -f $APP" >/dev/null 2>&1 || true
+# -e PORT : sans lui le serveur autonome ecoute sur 3000, deja pris par axiome, et
+# le conteneur redemarre en boucle sur EADDRINUSE. -e HOSTNAME : loopback
+# uniquement, le Wi-Fi est mutualise et sans pare-feu.
 sg docker -c "docker run -d --name $APP --restart unless-stopped --network host \
+	-e PORT=$PORT -e HOSTNAME=127.0.0.1 \
 	--env-file .env.container $APP:latest" >/dev/null
 
-sleep 4
-if sg docker -c "docker inspect -f '{{.State.Running}}' $APP" 2>/dev/null | grep -q true; then
-	log "conteneur en marche sur le port $PORT"
-else
-	log "ERREUR: le conteneur ne tourne pas — voir 'sg docker -c \"docker logs $APP\"'"
-	exit 1
-fi
+# Verification par une vraie reponse HTTP, pas par un drapeau d'etat.
+for i in $(seq 1 30); do
+	code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 3 "http://127.0.0.1:$PORT/" || true)
+	if [ -n "$code" ] && [ "$code" != "000" ]; then
+		log "service en ligne sur le port $PORT (reponse $code apres ${i}s)"
+		exit 0
+	fi
+	sleep 1
+done
+
+log "ERREUR: aucune reponse sur le port $PORT apres 30s"
+sg docker -c "docker logs --tail 20 $APP" 2>&1 | sed 's/^/    /' || true
+exit 1
