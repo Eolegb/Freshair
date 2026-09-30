@@ -1,5 +1,4 @@
 import { Toaster } from "@/components/ui/toaster"
-import { ClerkProvider } from "@clerk/nextjs"
 import type { Metadata, Viewport } from "next"
 import { BottomNav } from "./_components/BottomNav"
 import { Header } from "./_components/Header"
@@ -36,20 +35,18 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<ClerkProvider>
-			<html lang="fr">
-				<head>
-					<link rel="stylesheet" href="https://use.typekit.net/gnn8txw.css" />
-					<meta name="apple-mobile-web-app-capable" content="yes" />
-					<link rel="manifest" href="/manifest.json" />
-				</head>
-				<body className="pb-16">
-					<Header />
-					<div className="pt-12">{children}</div>
-					<BottomNav />
-					<Toaster />
-				</body>
-			</html>
-		</ClerkProvider>
+		<html lang="fr">
+			<head>
+				<link rel="stylesheet" href="https://use.typekit.net/gnn8txw.css" />
+				<meta name="apple-mobile-web-app-capable" content="yes" />
+				<link rel="manifest" href="/manifest.json" />
+			</head>
+			<body className="pb-16">
+				<Header />
+				<div className="pt-12">{children}</div>
+				<BottomNav />
+				<Toaster />
+			</body>
+		</html>
 	)
 }

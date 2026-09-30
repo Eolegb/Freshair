@@ -1,40 +1,46 @@
-import { NextResponse } from "next/server"
+import { NextResponse, type NextRequest } from "next/server"
+import { COOKIE_SESSION, cookieValide, secret } from "@/lib/session"
 
-// ============================================================================
-// ATTENTION — CE MIDDLEWARE NE PROTEGE PLUS RIEN, VOLONTAIREMENT ET TEMPORAIREMENT
-//
-// Pourquoi : l'appli utilise une instance Clerk de DEVELOPPEMENT (cle `pk_test_`).
-// Sur un serveur, toute requete sans le cookie « dev-browser » de Clerk fait
-// basculer son etat en `Handshake`. Le middleware de Clerk cherche alors une
-// redirection a poser ; quand il n'en trouve pas, il LEVE
-// « Clerk: handshake status without redirect » — et Next 16 ne renvoie jamais la
-// reponse : la connexion reste ouverte, zero octet, aucune erreur au journal.
-// Verifie : avec Clerk, /today, /explore et l'API restaient suspendus ; en
-// retirant Clerk, tout repond en moins de 300 ms.
-//
-// Consequence : la protection des pages se fait desormais par l'acces lui-meme.
-// L'appli est liee a l'IP Tailscale, donc seule Eole (et ses appareils du
-// tailnet) peut l'atteindre. Elle n'est PAS exposée publiquement.
-//
-// Pour retablir Clerk : passer l'instance Clerk en PRODUCTION (cle `pk_live_`,
-// ce qui exige un domaine a soi et des enregistrements DNS), puis restaurer le
-// bloc d'origine, conserve ci-dessous.
-//
-//   const isProtected = createRouteMatcher(["/dashboard(.*)", "/api/nomad/today(.*)"])
-//   export default clerkMiddleware(async (auth, req) => {
-//     if (isProtected(req)) await auth.protect()
-//   })
-// ============================================================================
-export default function middleware() {
-	return NextResponse.next()
+// Connexion simple : un mot de passe unique, echange contre un cookie signe.
+// Aucune dependance externe. Clerk est ecarte parce que son instance de
+// developpement bloquait toutes les requetes : elle passait en etat `Handshake`,
+// ne trouvait pas de redirection a poser, levait « Clerk: handshake status
+// without redirect », et Next 16 ne renvoyait alors jamais la reponse.
+
+// Toujours joignables : la page de connexion, et les appels qui portent leur
+// propre authentification (le webhook d'Apify a son secret a lui).
+const LIBRES = [/^\/login\/?$/, /^\/api\/login\/?$/, /^\/api\/apify-webhook/]
+
+export default function middleware(req: NextRequest) {
+	const chemin = req.nextUrl.pathname
+
+	if (LIBRES.some((motif) => motif.test(chemin))) {
+		return NextResponse.next()
+	}
+
+	if (!secret()) {
+		// Echec ferme : sans secret rien n'est verifiable, donc on refuse tout
+		// plutot que d'ouvrir l'appli. Le message dit quoi corriger.
+		console.error("APP_SESSION_SECRET manquant : toute requete est refusee")
+		return new NextResponse("Configuration incomplete : APP_SESSION_SECRET absent.", {
+			status: 500
+		})
+	}
+
+	if (cookieValide(req.cookies.get(COOKIE_SESSION)?.value)) {
+		return NextResponse.next()
+	}
+
+	const vers = req.nextUrl.clone()
+	vers.pathname = "/login"
+	vers.search = ""
+	if (chemin !== "/") vers.searchParams.set("suite", chemin)
+	return NextResponse.redirect(vers)
 }
 
-// Runtime Node explicite. Par defaut le middleware part sur le runtime Edge, ou
-// Clerk tourne dans un bac a sable : ici il s'y bloquait, et TOUTE requete passant
-// par le middleware restait suspendue (accueil, /today, /api) alors que les
-// fichiers statiques, exclus du matcher, repondaient normalement. Meme code, sans
-// le bac a sable.
 export const config = {
+	// Runtime Node : `node:crypto` n'existe pas sur le runtime Edge, or la
+	// signature du cookie en depend.
 	runtime: "nodejs",
 	matcher: [
 		"/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",

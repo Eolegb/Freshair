@@ -1,8 +1,11 @@
 "use client"
 
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs"
 import Link from "next/link"
 
+// Plus de composants Clerk ici : l'instance Clerk du projet est une instance de
+// developpement (cle pk_test_), et ses composants cote navigateur declenchent la
+// meme poignee de main qui bloquait deja le serveur. La connexion est desormais
+// un simple mot de passe, verifie par le middleware.
 export function Header() {
 	return (
 		<header className="fixed top-0 left-0 right-0 z-50 h-12 flex items-center justify-between bg-background/95 backdrop-blur border-b safe-area-top px-4">
@@ -10,23 +13,14 @@ export function Header() {
 			<Link href="/explore" className="text-lg font-bold tracking-tight text-primary">
 				Freshair
 			</Link>
-			<div className="flex items-center gap-2">
-				<SignedIn>
-					<UserButton
-						appearance={{
-							elements: {
-								avatarBox: "h-7 w-7"
-							}
-						}}
-					/>
-				</SignedIn>
-				<SignedOut>
-					<SignInButton mode="modal">
-						<button type="button" className="text-sm font-medium text-primary hover:underline">
-							Connexion
-						</button>
-					</SignInButton>
-				</SignedOut>
+			<div className="flex items-center gap-3 w-8 justify-end">
+				<Link
+					href="/api/logout"
+					className="text-xs text-muted-foreground hover:text-foreground"
+					title="Se déconnecter"
+				>
+					Quitter
+				</Link>
 			</div>
 		</header>
 	)
