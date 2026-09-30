@@ -33,6 +33,13 @@
 		--ring: 262 83% 58%;
 
 		--radius: 0.5rem;
+
+		/* Hauteurs des barres fixes. --header-h = h-12 du Header ; --nav-h = hauteur
+		   visible de la BottomNav ; --nav-total ajoute la zone sure iPhone pour que le
+		   contenu ne passe jamais sous la barre du bas (viewportFit: cover). */
+		--header-h: 48px;
+		--nav-h: 48px;
+		--nav-total: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
 	}
 
 	.dark {

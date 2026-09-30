@@ -8,7 +8,7 @@ import Link from "next/link"
 // un simple mot de passe, verifie par le middleware.
 export function Header() {
 	return (
-		<header className="fixed top-0 left-0 right-0 z-50 h-12 flex items-center justify-between bg-background/95 backdrop-blur border-b safe-area-top px-4">
+		<header className="fixed top-0 left-0 right-0 z-50 h-12 flex items-center justify-between bg-background/95 backdrop-blur border-b safe-area-top px-3">
 			<div className="w-8" />
 			<Link href="/explore" className="text-lg font-bold tracking-tight text-primary">
 				Freshair

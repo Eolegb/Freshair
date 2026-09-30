@@ -15,7 +15,7 @@ export default async function ListingPage({ params }: { params: Params }) {
 	if (!listing) {
 		return (
 			<div className="min-h-screen flex flex-col">
-				<main className="flex-1 container mx-auto px-4 flex items-center justify-center">
+				<main className="flex-1 container mx-auto px-3 flex items-center justify-center">
 					<div className="text-center">
 						<h1 className="text-2xl font-semibold mb-4">
 							Logement introuvable
@@ -38,7 +38,7 @@ export default async function ListingPage({ params }: { params: Params }) {
 
 	return (
 		<div>
-			<main className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-40 pb-20 md:pb-10">
+			<main className="container mx-auto px-3 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-40 pb-20 md:pb-10">
 				<h1 className="text-2xl font-semibold pt-6">{listing.data.h1Title}</h1>
 				<Gallery
 					images={allImages}

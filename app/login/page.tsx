@@ -20,7 +20,7 @@ export default async function LoginPage({
 	}
 
 	return (
-		<div className="flex flex-col items-center justify-center px-6" style={{ minHeight: "calc(100dvh - 48px - 64px)" }}>
+		<div className="flex flex-col items-center justify-center px-3" style={{ minHeight: "calc(100dvh - var(--header-h) - var(--nav-total))" }}>
 			<div className="w-full max-w-sm">
 				<h1 className="text-2xl font-bold text-center text-primary mb-1">Freshair</h1>
 				<p className="text-sm text-muted-foreground text-center mb-6">

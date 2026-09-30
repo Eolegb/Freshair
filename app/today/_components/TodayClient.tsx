@@ -174,13 +174,13 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 		// overflow-hidden et hauteur bornee : la page ne defile plus elle-meme, une
 		// seule zone defile — la liste. Avant, le document defilait ET la liste
 		// defilait, et le bandeau venait recouvrir les prestations.
-		<div className="flex flex-col overflow-hidden" style={{ height: "calc(100dvh - 48px - 64px)" }}>
+		<div className="flex flex-col overflow-hidden" style={{ height: "calc(100dvh - var(--header-h) - var(--nav-total))" }}>
 			<DateScroller onDateChange={setCurrentDate} />
 			<TodayMap selected={selected} />
 
 			{/* shrink-0 : ces barres ne doivent jamais etre comprimees par le flex,
 			    sinon c'est la liste qui perd la place. */}
-			<div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
+			<div className="flex items-center justify-between px-3 py-3 border-b shrink-0">
 				<div className="min-w-0">
 					<h2 className="font-semibold text-sm">
 						{selected.length} logement{selected.length > 1 ? "s" : ""} - Planning
@@ -226,7 +226,7 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 			{commonLines.length > 0 && (
 				// shrink-0 et hauteur bornee : ce bloc ne doit jamais pousser la liste
 				// hors de l'ecran. Long, il defile lui-meme.
-				<div className="px-4 py-3 border-b bg-blue-50/50 shrink-0 max-h-[24dvh] overflow-y-auto">
+				<div className="px-3 py-3 border-b bg-blue-50/50 shrink-0 max-h-[24dvh] overflow-y-auto">
 					<div className="flex items-center gap-2 mb-2">
 						<Bus className="h-4 w-4 text-blue-600" />
 						<span className="text-xs font-semibold text-blue-800 uppercase tracking-wider">Lignes en commun</span>
@@ -248,7 +248,7 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 			    invisibles sous le bandeau. */}
 			<div className="flex-1 min-h-0 overflow-y-auto">
 				{selected.length === 0 ? (
-					<div className="flex flex-col items-center justify-center h-full text-center px-4">
+					<div className="flex flex-col items-center justify-center h-full text-center px-3">
 						<MapPin className="h-12 w-12 text-muted-foreground/30 mb-4" />
 						<p className="text-muted-foreground text-sm">
 							{loading ? "Chargement..." : "Appuie sur \"Ajouter\" pour sélectionner les logements de ce jour"}
@@ -259,7 +259,7 @@ export function TodayClient({ properties }: { properties: TodayProperty[] }) {
 						{selected.map((p) => {
 							const appleMapsUrl = "https://maps.apple.com/?daddr=" + encodeURIComponent(p.address || p.title)
 							return (
-								<div key={p.id} className="px-4 py-3">
+								<div key={p.id} className="px-3 py-3">
 									<div className="flex items-start justify-between">
 										<div className="min-w-0 flex-1">
 											<Link href={"/listing/" + p.id} className="hover:underline">

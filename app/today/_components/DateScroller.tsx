@@ -98,7 +98,7 @@ export function DateScroller({ onDateChange }: DateScrollerProps) {
 		// donc sticky n'aurait aucun effet et laisserait la barre se faire comprimer.
 		<div className="shrink-0 z-40 bg-background/95 backdrop-blur border-b">
 			{/* Titre du mois avec navigation */}
-			<div className="flex items-center justify-between px-4 py-2">
+			<div className="flex items-center justify-between px-3 py-2">
 				<button
 					onClick={handlePrevMonth}
 					className="p-1.5 hover:bg-muted rounded-lg transition-colors text-primary"
@@ -123,7 +123,7 @@ export function DateScroller({ onDateChange }: DateScrollerProps) {
 			{/* Bandeau de dates défilable horizontalement */}
 			<div
 				ref={scrollContainerRef}
-				className="flex gap-1 overflow-x-auto px-3 pb-3 pt-1 scrollbar-hide snap-x snap-mandatory"
+				className="flex gap-1 overflow-x-auto px-2 pb-3 pt-1 scrollbar-hide snap-x snap-mandatory"
 			>
 				{dates.map((date) => {
 					const key = format(date, "yyyy-MM-dd")

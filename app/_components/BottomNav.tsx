@@ -14,7 +14,10 @@ export function BottomNav() {
 
 	return (
 		<nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 safe-area-bottom">
-			<div className="flex h-16 items-center justify-around">
+			{/* h-[var(--nav-h)] : barre compacte (48px). Les items sont etires sur toute
+			    la hauteur (flex-1) : la zone tactile reste >= 44px malgre la hauteur
+			    reduite, et couvre toute la largeur de chaque onglet. */}
+			<div className="flex h-[var(--nav-h)] items-stretch">
 				{tabs.map((tab) => {
 					const isActive =
 						pathname === tab.href || pathname.startsWith(tab.href + "/")
@@ -23,13 +26,13 @@ export function BottomNav() {
 							key={tab.href}
 							href={tab.href}
 							prefetch
-							className={`flex flex-col items-center gap-1 px-6 py-2 text-xs font-medium transition-colors ${
+							className={`flex flex-1 flex-col items-center justify-center gap-0.5 text-xs font-medium transition-colors ${
 								isActive
 									? "text-primary"
 									: "text-muted-foreground"
 							}`}
 						>
-							<tab.icon className={`h-5 w-5 ${isActive ? "stroke-[2.5]" : ""}`} />
+							<tab.icon className={`h-[18px] w-[18px] ${isActive ? "stroke-[2.5]" : ""}`} />
 							{tab.label}
 						</Link>
 					)

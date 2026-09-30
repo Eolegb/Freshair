@@ -25,7 +25,7 @@ export function ExploreClient({ properties }: { properties: ExploreProperty[] })
 
 	return (
 		<div>
-			<div className="sticky top-12 z-40 bg-background border-b px-4 py-3">
+			<div className="sticky top-12 z-40 bg-background border-b px-3 py-3">
 				<div className="relative max-w-md mx-auto">
 					<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
 					<Input
@@ -37,7 +37,7 @@ export function ExploreClient({ properties }: { properties: ExploreProperty[] })
 				</div>
 			</div>
 
-			<div className="px-4 pt-4">
+			<div className="px-3 pt-4">
 				<p className="text-sm text-muted-foreground mb-4">
 					{filtered.length} logement{filtered.length > 1 ? "s" : ""}
 				</p>
