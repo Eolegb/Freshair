@@ -104,9 +104,13 @@ export async function POST(request: Request) {
 			// PAS de colonne `id` ici : elle est de type entier avec une sequence
 			// (nextval). L'ancienne version y ecrivait un crypto.randomUUID() — une
 			// chaine dans une colonne entiere — donc CHAQUE enregistrement echouait.
-			const values = valides.map((propertyId) => ({ date, propertyId }))
+			// Les cles doivent porter le NOM EXACT de la colonne : l'aide `tx(...)` les
+			// recopie telles quelles dans le SQL. `propertyId` produisait
+			// « column "propertyId" of relation "cleaning_schedule" does not exist »
+			// et faisait echouer chaque enregistrement.
+			const values = valides.map((propertyId) => ({ date, property_id: propertyId }))
 			await tx`
-        INSERT INTO cleaning_schedule ${tx(values, "date", "propertyId")}
+        INSERT INTO cleaning_schedule ${tx(values, "date", "property_id")}
         ON CONFLICT (date, property_id) DO NOTHING
       `
 			await tx`
